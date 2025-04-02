@@ -17,15 +17,20 @@ public class Constants {
 	public final static int GROUND_HEIGHT  = SCREEN_SIZE.height/3;
 
 	//Key Codes
-	public final static int LEFTKEY = 37;
-	public final static int RIGHTKEY = 39;
-	public final static int SPACEKEY = 32;
+	public final static int LEFTP1 = 37;
+	public final static int RIGHTP1 = 39;
+	public final static int UPP1 = 38;
+	
+	public final static int LEFTP2 = 65;
+	public final static int RIGHTP2 = 68;
+	public final static int UPP2 = 87;
 	//Player
 
 
 	public final static int PLAYER_WIDTH = 50;
 	public final static int PLAYER_HEIGHT = 50;
 	public final static int PLAYER_START_X = 0;
+	public final static int PLAYER2_START_X = 200;
 	public final static int PLAYER_SPEED = 2;
 	public final static int PLAYER_JUMP_HEIGHT = 70;
 	public final static int PLAYER_FALL_SPEED = 4;

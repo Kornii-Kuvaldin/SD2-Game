@@ -18,6 +18,7 @@ public class GameManager {
 
 
 	private Player player;
+	private Player player2;
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	
@@ -28,6 +29,7 @@ public class GameManager {
 	public void restart() {
 		
 		player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		player2 = new Player("goomba.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
 		enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 		enemy.setPatrol(Constants.ENEMY_START_X ,Constants.SCREEN_SIZE.width/2, 3);
@@ -42,8 +44,7 @@ public class GameManager {
 
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
-		//Draw enemy
-		graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
+		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 		
 		
 		//Draw coins
@@ -63,7 +64,7 @@ public class GameManager {
 	public void update()
 	{
 		player.update();
-		enemy.update();
+		player2.update();
 		
 		//collision checking
 		checkCollision(player,enemy);
@@ -81,14 +82,23 @@ public class GameManager {
 
 		switch(code)
 		{
-		case  Constants.RIGHTKEY: //right
+		case  Constants.RIGHTP1: //right
 			player.moveRight();
 			break;
-		case Constants.LEFTKEY: //left
+		case Constants.LEFTP1: //left
 			player.moveLeft();
 			break;
-		case Constants.SPACEKEY: //space
+		case Constants.UPP1 : //space
 			player.jump();
+			break;
+		case  Constants.RIGHTP2: //right
+			player2.moveRight();
+			break;
+		case Constants.LEFTP2: //left
+			player2.moveLeft();
+			break;
+		case Constants.UPP2 : //space
+			player2.jump();
 			break;
 		}
 	

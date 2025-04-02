@@ -20,7 +20,7 @@ class GameManagerTest {
 	void testPlayerMovement() {
 		GameManager game = new GameManager();
 		int startPosition = Constants.PLAYER_START_X;
-		game.keyPressed(Constants.RIGHTKEY);
+		game.keyPressed(Constants.RIGHTP1);
 		Player player = game.getPlayer();
 		assertEquals(player.getX(), startPosition + Constants.PLAYER_SPEED);
 	}
