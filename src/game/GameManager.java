@@ -3,6 +3,8 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -21,6 +23,7 @@ public class GameManager {
 	private Player player2;
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
+	private Set<Integer> activeKeys = new HashSet<Integer>();
 	
 	public GameManager() {
 		restart();
@@ -75,33 +78,46 @@ public class GameManager {
 	}
 	
 	public void keyPressed(int code) {
-		//switch keyCode
-		// 39 - right key
-		// 37 - left key
-		// 32 - space key
+		activeKeys.add(code); //Adding key pressed to HashSet once pressed
+		updatePlayerMovement();
 
-		switch(code)
-		{
-		case  Constants.RIGHTP1: //right
-			player.moveRight();
-			break;
-		case Constants.LEFTP1: //left
-			player.moveLeft();
-			break;
-		case Constants.UPP1 : //space
-			player.jump();
-			break;
-		case  Constants.RIGHTP2: //right
-			player2.moveRight();
-			break;
-		case Constants.LEFTP2: //left
-			player2.moveLeft();
-			break;
-		case Constants.UPP2 : //space
-			player2.jump();
-			break;
-		}
+	}
 	
+	public void keyReleased(int code) {
+		activeKeys.remove(code); //Removing key pressed from HashSet once released 
+		updatePlayerMovement();
+	}
+	
+	//Method takes care of players movement
+	public void updatePlayerMovement () {
+		
+		//Movement for player 1
+		if (activeKeys.contains(Constants.LEFTP1))
+		{
+			player.moveLeft();;
+		}
+		if (activeKeys.contains(Constants.RIGHTP1))
+		{
+			player.moveRight();
+		}
+		if (activeKeys.contains(Constants.UPP1))
+		{
+			player.jump();
+		}
+		
+		//Movement for player 2
+		if (activeKeys.contains(Constants.LEFTP2))
+		{
+			player2.moveLeft();;
+		}
+		if (activeKeys.contains(Constants.RIGHTP2))
+		{
+			player2.moveRight();
+		}
+		if (activeKeys.contains(Constants.UPP2))
+		{
+			player2.jump();
+		}
 	}
 	
 	public void checkCollision(Player player, Sprite other) {

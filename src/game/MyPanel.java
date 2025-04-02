@@ -71,7 +71,8 @@ public class MyPanel extends JPanel implements  KeyListener {
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+		game.keyReleased(e.getKeyCode());
+		this.repaint();
 	}
 
 }
