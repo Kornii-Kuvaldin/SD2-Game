@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class GameManager {
 	private ArrayList<Blocks> blocks; //List that holds all the blocks
 	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
+	private boolean isGameResetting = false;
 	
 	public GameManager() {
 		this.blocks = new ArrayList<>();
@@ -35,6 +37,11 @@ public class GameManager {
 	}
 	
 	public void restart() {
+		if(isGameResetting) {
+			return;
+		}
+		
+		isGameResetting = true;
 		
 		player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("goomba.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
@@ -59,6 +66,15 @@ public class GameManager {
 						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 					}
 				}
+		new Thread(()->{
+		try {
+			Thread.sleep(500);
+			restart();
+			}
+		catch (InterruptedException e){
+			e.printStackTrace();
+			}
+		}).start();
 	}
 
 	
@@ -156,13 +172,19 @@ public class GameManager {
 			{
 				//check what we collided with
 				if(other instanceof Enemy) {
-					restart();
+					resetGame();
 				}
 				if(other instanceof Coin ) {
 						player.increaseScore();
 						((Coin)other).setCollected(true);
 				}
 			}
+		}
+	}
+	
+	private void resetGame() {
+		if(isGameResetting){
+			return;
 		}
 	}
 	
