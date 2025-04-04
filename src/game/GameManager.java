@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,12 +49,12 @@ public class GameManager {
 		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
-		enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
+		//enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 
-		player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		//player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 
 
-		enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
+		//enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 		//trials
 		//int screenWidth = frame.getWidth();
 		//int screenHeight = frame.getHeight();
@@ -119,7 +120,7 @@ public class GameManager {
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 		//Draw enemy
-		graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
+		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
 		for (Block block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
@@ -170,7 +171,9 @@ public class GameManager {
 
 	}
 	
+	
 	public void keyReleased(int code) {
+		int playerY = Constants.GROUND_HEIGHT;
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
 	}
@@ -181,7 +184,7 @@ public class GameManager {
 		//Movement for player 1
 		if (activeKeys.contains(Constants.LEFTP1))
 		{
-			player.moveLeft();;
+			player.moveLeft();
 		}
 		if (activeKeys.contains(Constants.RIGHTP1))
 		{
