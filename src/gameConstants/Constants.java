@@ -43,7 +43,10 @@ public class Constants {
 	//Coin
 	public final static int COIN_SIZE = 50;
 	public final static int COIN_SCORE = 1;
-
+	
+	//Block
+	public final static int BLOCK_WIDTH = 100;
+	public final static int BLOCK_HEIGHT = 50;
 	
 	//speed
 
