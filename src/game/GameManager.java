@@ -56,6 +56,9 @@ public class GameManager {
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 43; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
+		//debugging for columns and rows 
+		//System.out.println("Clolumns: " + columns);
+		//System.out.println("Rows: " + rows);
 		
 		//saves the position of the blocks in a grid 
 				for(int row = 0; row < rows + 10; row++) {
@@ -64,6 +67,8 @@ public class GameManager {
 						x = column * 53; //increases the z factor 
 						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
 						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+						//debuggig for possitioning 
+						//System.out.println("Block created at position: (" + x + ", " + y + ")");
 					}
 				}
 		new Thread(()->{
@@ -96,6 +101,9 @@ public class GameManager {
 		for (Blocks block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
+		//debbuging for height and width of image 
+		//System.out.println("Height: " + block.getHeight());
+		//System.out.println("Width: " + block.getWidth());
 		
 		//Draw GUI - score
 
