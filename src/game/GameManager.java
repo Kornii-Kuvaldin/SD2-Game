@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import gameConstants.Constants;
-import sprites.Blocks;
+import sprites.Block;
 import sprites.Coin;
 import sprites.Enemy;
 import sprites.Player;
@@ -31,11 +31,12 @@ public class GameManager {
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
 	
+	private ArrayList<Block> blocks;
 	public GameManager() {
 		this.blocks = new ArrayList<>();
 		restart();
 	}
-	
+
 	public void restart() {
 		if(isGameResetting) {
 			return;
@@ -47,12 +48,11 @@ public class GameManager {
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
 		enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
-		enemy.setPatrol(Constants.ENEMY_START_X ,Constants.SCREEN_SIZE.width/2, 3);
-		
-		coins = new ArrayList<Coin>();
-		coins.add(new Coin("coin.png", 100, Constants.GROUND_HEIGHT , Constants.COIN_SIZE,Constants.COIN_SIZE));
-		coins.add(new Coin("coin.png", 250, Constants.GROUND_HEIGHT  - 60, Constants.COIN_SIZE,Constants.COIN_SIZE));
-		
+
+		player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+
+
+		enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 		//trials
 		//int screenWidth = frame.getWidth();
 		//int screenHeight = frame.getHeight();
@@ -105,23 +105,20 @@ public class GameManager {
 			e.printStackTrace();
 			}
 		}).start();
+
+		blocks = new ArrayList<Block>();
+		blocks.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
+		blocks.get(0).setHardness(50);
 	}
 
-	
+
 	public void drawSprites(Graphics2D graphics, JPanel panel) {
 
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
-		
-		
-		//Draw coins
-		for(Coin coin : coins)
-		{
-			if(coin.isCollected() == false)
-				graphics.drawImage(coin.getImage(), coin.getX(), coin.getY(),coin.getWidth(),coin.getHeight(),panel);
-		}
-		
+		//Draw enemy
+		graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
 		for (Blocks block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
@@ -138,26 +135,34 @@ public class GameManager {
 		//System.out.println("Height: " + block.getHeight());
 		//System.out.println("Width: " + block.getWidth());
 		
+		for(Block block : blocks)
+		{
+			graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
+		}
+
 		//Draw GUI - score
 
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
 	}
-	
+
 	public void update()
 	{
 		player.update();
 		player2.update();
-		
+		enemy.update();
 		//collision checking
 		checkCollision(player,enemy);
 		for(Coin coin: coins) {
 			if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				checkCollision(player,coin);
+			for(Block block: blocks){
+				checkCollision(player,block);
+			}
 		}
 	}
-	
+
 	public void keyPressed(int code) {
 		activeKeys.add(code); //Adding key pressed to HashSet once pressed
 		updatePlayerMovement();
@@ -185,7 +190,6 @@ public class GameManager {
 		{
 			player.jump();
 		}
-		
 		//Movement for player 2
 		if (activeKeys.contains(Constants.LEFTP2))
 		{
@@ -200,12 +204,11 @@ public class GameManager {
 			player2.jump();
 		}
 	}
-	
 	public void checkCollision(Player player, Sprite other) {
-		
+
 		//basic collision detection 
 		//check if one image intersects the other
-		
+
 		//check intersection on x axis
 		if(player.getX() + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
 		{ //check intersection on y axis
@@ -216,29 +219,34 @@ public class GameManager {
 					resetGame();
 				}
 				if(other instanceof Coin ) {
-						player.increaseScore();
-						((Coin)other).setCollected(true);
+					player.increaseScore();
+					((Coin)other).setCollected(true);
+				}
+				if(other instanceof Block) {
+					player.moveLeft();
+					System.out.println(((Block) other).getBroken());
+					if(((Block) other).getBroken()) {
+						blocks.remove(other);
+					}
 				}
 			}
 		}
 	}
-	
 	private void resetGame() {
 		if(isGameResetting){
 			return;
 		}
 	}
-	
 	//getters
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public Enemy getEnemy() {
 		return enemy;
 	}
-	
-	
+
+
 	public ArrayList<Coin> getCoins() {
 		return coins;
 	}
