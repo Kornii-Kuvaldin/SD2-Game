@@ -31,7 +31,7 @@ public class GameManager {
 	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
-	private ArrayList<Block> blocks1;
+	//private ArrayList<Block> blocks1;
 	
 	public GameManager() {
 		this.blocks = new ArrayList<>();
@@ -107,9 +107,9 @@ public class GameManager {
 			}
 		}).start();
 
-		blocks1 = new ArrayList<Block>();
-		blocks1.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
-		blocks1.get(0).setHardness(50);
+		//blocks1 = new ArrayList<Block>();
+		//blocks1.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
+		//blocks1.get(0).setHardness(50);
 	}
 
 
@@ -136,10 +136,10 @@ public class GameManager {
 		//System.out.println("Height: " + block.getHeight());
 		//System.out.println("Width: " + block.getWidth());
 		
-		for(Block block : blocks1)
-		{
-			graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
-		}
+		//for(Block block : blocks1)
+		//{
+			//graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
+		//}
 
 		//Draw GUI - score
 
@@ -158,9 +158,9 @@ public class GameManager {
 		for(Coin coin: coins) {
 			if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				checkCollision(player,coin);
-			for(Block block: blocks1){
-				checkCollision(player,block);
-			}
+			//for(Block block: blocks1){
+				//checkCollision(player,block);
+			//}
 		}
 	}
 
@@ -223,13 +223,13 @@ public class GameManager {
 					player.increaseScore();
 					((Coin)other).setCollected(true);
 				}
-				if(other instanceof Block) {
-					player.moveLeft();
-					System.out.println(((Block) other).getBroken());
-					if(((Block) other).getBroken()) {
-						blocks1.remove(other);
-					}
-				}
+				//if(other instanceof Block) {
+					//player.moveLeft();
+					//System.out.println(((Block) other).getBroken());
+					//if(((Block) other).getBroken()) {
+						//blocks1.remove(other);
+					//}
+				//}
 			}
 		}
 	}
