@@ -155,13 +155,13 @@ public class GameManager {
 		enemy.update();
 		//collision checking
 		checkCollision(player,enemy);
-		for(Coin coin: coins) {
-			if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
-				checkCollision(player,coin);
+		//for(Coin coin: coins) {
+			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
+				//checkCollision(player,coin);
 			//for(Block block: blocks1){
 				//checkCollision(player,block);
 			//}
-		}
+		//}
 	}
 
 	public void keyPressed(int code) {
@@ -219,10 +219,10 @@ public class GameManager {
 				if(other instanceof Enemy) {
 					resetGame();
 				}
-				if(other instanceof Coin ) {
-					player.increaseScore();
-					((Coin)other).setCollected(true);
-				}
+				//if(other instanceof Coin ) {
+					//player.increaseScore();
+					//((Coin)other).setCollected(true);
+				//}
 				//if(other instanceof Block) {
 					//player.moveLeft();
 					//System.out.println(((Block) other).getBroken());
