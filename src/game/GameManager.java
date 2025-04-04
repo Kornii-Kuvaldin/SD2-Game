@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import gameConstants.Constants;
+import sprites.Blocks;
 import sprites.Coin;
 import sprites.Enemy;
 import sprites.Player;
@@ -24,8 +25,12 @@ public class GameManager {
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
+	private ArrayList<Blocks> blocks; //List that holds all the blocks
+	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
+	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	
 	public GameManager() {
+		this.blocks = new ArrayList<>();
 		restart();
 	}
 	
@@ -40,6 +45,20 @@ public class GameManager {
 		coins = new ArrayList<Coin>();
 		coins.add(new Coin("coin.png", 100, Constants.GROUND_HEIGHT , Constants.COIN_SIZE,Constants.COIN_SIZE));
 		coins.add(new Coin("coin.png", 250, Constants.GROUND_HEIGHT  - 60, Constants.COIN_SIZE,Constants.COIN_SIZE));
+		
+		int x = 0; //setting x to 0 to make sure 
+		int y = Constants.GROUND_HEIGHT + 43; //setting y to a bit bellow Ground height
+		blocks = new ArrayList<>(); //initialize ArrayList
+		
+		//saves the position of the blocks in a grid 
+				for(int row = 0; row < rows + 10; row++) {
+					for (int column = 0; column < columns + 26; column++) {
+						String fileName = "block1.png"; //name of the file 
+						x = column * 53; //increases the z factor 
+						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
+						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+					}
+				}
 	}
 
 	
@@ -55,6 +74,11 @@ public class GameManager {
 		{
 			if(coin.isCollected() == false)
 				graphics.drawImage(coin.getImage(), coin.getX(), coin.getY(),coin.getWidth(),coin.getHeight(),panel);
+		}
+		
+		//Draw blocks
+		for (Blocks block : blocks) {
+			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
 		
 		//Draw GUI - score
