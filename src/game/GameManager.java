@@ -53,12 +53,36 @@ public class GameManager {
 		coins.add(new Coin("coin.png", 100, Constants.GROUND_HEIGHT , Constants.COIN_SIZE,Constants.COIN_SIZE));
 		coins.add(new Coin("coin.png", 250, Constants.GROUND_HEIGHT  - 60, Constants.COIN_SIZE,Constants.COIN_SIZE));
 		
+		//trials
+		//int screenWidth = frame.getWidth();
+		//int screenHeight = frame.getHeight();
+		//int groundHeight = screenHeight/10;
+		//int columns = (int) Math.ceil((double)(screenHeight - (groundHeight + 43))/blockHeight);
+		//int rows = (int) Math.ceil((double)screenWidth/blockWidth);
+		
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 43; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
+		
 		//debugging for columns and rows 
 		//System.out.println("Clolumns: " + columns);
 		//System.out.println("Rows: " + rows);
+		
+		//trial
+		//blocks.clear();
+		/*
+		 * for(int row = 0; row < rows + 10; row++) {
+				if (x + blockWidth <= SCREEN_WIDTH && y + blockHeight <= SCREEN_HEIGHT) {
+					String fileName = "block1.png"; //name of the file 
+					x = column * 53; //increases the z factor 
+					y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
+					if (x >= SCREEN_WIDTH) {
+						x = 0;
+						y = (GROUND_HEIGHT +43) + (row * blockHeight);
+				}
+				blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+			}
+		 */
 		
 		//saves the position of the blocks in a grid 
 				for(int row = 0; row < rows + 10; row++) {
@@ -67,6 +91,7 @@ public class GameManager {
 						x = column * 53; //increases the z factor 
 						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
 						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+						
 						//debuggig for possitioning 
 						//System.out.println("Block created at position: (" + x + ", " + y + ")");
 					}
@@ -101,6 +126,14 @@ public class GameManager {
 		for (Blocks block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
+		
+		//trial
+		//Iterator<Blocks> iterator = blocks.iterator();
+		//while (iterator.hasNext()) {
+			//Blocks block = iterator.next();
+			//graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		//}
+		
 		//debbuging for height and width of image 
 		//System.out.println("Height: " + block.getHeight());
 		//System.out.println("Width: " + block.getWidth());

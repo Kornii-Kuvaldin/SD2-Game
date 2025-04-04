@@ -18,7 +18,7 @@ public class Init {
 		frame.setSize(Constants.SCREEN_SIZE.width/2,Constants.SCREEN_SIZE.height/2);
 		frame.setVisible(true);
 		
-		//Frame takes focus for keyboard dand mouse inputs
+		//Frame takes focus for keyboard and mouse inputs
 		frame.requestFocus();
 		panel.requestFocus(); 
 		
