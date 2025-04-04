@@ -47,7 +47,7 @@ public class MyPanel extends JPanel implements  KeyListener {
 		graphics.fillRect(0,0,Constants.SCREEN_SIZE.width,Constants.SCREEN_SIZE.height);
 		
 		//green rectangle for ground  
-		graphics.setColor(Constants.GRASS_GREEN);
+		graphics.setColor(Constants.BLACK);
 		graphics.fillRect(0,Constants.GROUND_HEIGHT ,Constants.SCREEN_SIZE.width,Constants.SCREEN_SIZE.height);
 	}
 	

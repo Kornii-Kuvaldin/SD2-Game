@@ -52,7 +52,7 @@ public class Constants {
 
 	//colors
 	public final static Color SKY_BLUE = new Color(174, 227, 245);//rgb
-	public final static Color GRASS_GREEN = new Color(79, 179, 85);//rgb
+	public final static Color BLACK = new Color(0, 0, 0);//rgb
 
 	//Fonts
 	public final static	Font SCORE_FONT = new Font( "SansSerif", Font.BOLD, 18 );
