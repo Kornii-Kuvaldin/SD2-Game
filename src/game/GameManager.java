@@ -43,10 +43,10 @@ public class GameManager {
 		
 		isGameResetting = true;
 		
-		player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
-		player2 = new Player("goomba.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
-		enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
+		enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 		enemy.setPatrol(Constants.ENEMY_START_X ,Constants.SCREEN_SIZE.width/2, 3);
 		
 		coins = new ArrayList<Coin>();
