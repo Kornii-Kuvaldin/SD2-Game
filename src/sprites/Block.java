@@ -1,11 +1,11 @@
 package sprites;
 
-public class Blocks extends Sprite {
+public class Block extends Sprite {
 
 	private double hardness;
 	private double value;
 	
-	public Blocks(String fileName, int x, int y, int width, int height) {
+	public Block(String fileName, int x, int y, int width, int height) {
 		super(fileName, x, y, width, height);
 	}
 	

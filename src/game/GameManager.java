@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import gameConstants.Constants;
+//import sprites.Block;
 import sprites.Block;
 import sprites.Coin;
 import sprites.Enemy;
@@ -26,12 +27,12 @@ public class GameManager {
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
-	private ArrayList<Blocks> blocks; //List that holds all the blocks
+	private ArrayList<Block> blocks; //List that holds all the blocks
 	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
+	private ArrayList<Block> blocks1;
 	
-	private ArrayList<Block> blocks;
 	public GameManager() {
 		this.blocks = new ArrayList<>();
 		restart();
@@ -90,7 +91,7 @@ public class GameManager {
 						String fileName = "block1.png"; //name of the file 
 						x = column * 53; //increases the z factor 
 						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
-						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 						
 						//debuggig for possitioning 
 						//System.out.println("Block created at position: (" + x + ", " + y + ")");
@@ -106,9 +107,9 @@ public class GameManager {
 			}
 		}).start();
 
-		blocks = new ArrayList<Block>();
-		blocks.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
-		blocks.get(0).setHardness(50);
+		blocks1 = new ArrayList<Block>();
+		blocks1.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
+		blocks1.get(0).setHardness(50);
 	}
 
 
@@ -120,7 +121,7 @@ public class GameManager {
 		//Draw enemy
 		graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
-		for (Blocks block : blocks) {
+		for (Block block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
 		
@@ -135,7 +136,7 @@ public class GameManager {
 		//System.out.println("Height: " + block.getHeight());
 		//System.out.println("Width: " + block.getWidth());
 		
-		for(Block block : blocks)
+		for(Block block : blocks1)
 		{
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
 		}
@@ -157,7 +158,7 @@ public class GameManager {
 		for(Coin coin: coins) {
 			if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				checkCollision(player,coin);
-			for(Block block: blocks){
+			for(Block block: blocks1){
 				checkCollision(player,block);
 			}
 		}
@@ -226,7 +227,7 @@ public class GameManager {
 					player.moveLeft();
 					System.out.println(((Block) other).getBroken());
 					if(((Block) other).getBroken()) {
-						blocks.remove(other);
+						blocks1.remove(other);
 					}
 				}
 			}
