@@ -249,6 +249,10 @@ public class GameManager {
 	public Player getPlayer() {
 		return player;
 	}
+	
+	public Store getStore() {
+		return store;
+	}
 
 	public Enemy getEnemy() {
 		return enemy;
