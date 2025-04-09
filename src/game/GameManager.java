@@ -125,6 +125,10 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
+		
+		//Draw store 
+		graphics.drawImage(store.getImage(), store.getX(), store.getY(), store.getWidth(), store.getHeight(), panel);
+		
 		//Draw enemy
 		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
