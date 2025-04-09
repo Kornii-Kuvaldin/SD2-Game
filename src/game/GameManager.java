@@ -94,6 +94,8 @@ public class GameManager {
 						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
 						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 						
+						//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
+						
 						//debuggig for possitioning 
 						//System.out.println("Block created at position: (" + x + ", " + y + ")");
 					}
@@ -153,9 +155,9 @@ public class GameManager {
 	{
 		player.update();
 		player2.update();
-		enemy.update();
+		//enemy.update();
 		//collision checking
-		checkCollision(player,enemy);
+		//checkCollision(player,enemy);
 		//for(Coin coin: coins) {
 			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				//checkCollision(player,coin);
