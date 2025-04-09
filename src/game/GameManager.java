@@ -17,6 +17,7 @@ import sprites.Coin;
 import sprites.Enemy;
 import sprites.Player;
 import sprites.Sprite;
+import sprites.Store;
 
 
 //Controls game logic
@@ -25,6 +26,7 @@ public class GameManager {
 
 	private Player player;
 	private Player player2;
+	private Store store;
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
