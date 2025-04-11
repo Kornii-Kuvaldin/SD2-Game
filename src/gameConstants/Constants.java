@@ -37,15 +37,6 @@ public class Constants {
 	public final static int PLAYER_JUMP_HEIGHT = 70;
 	public final static int PLAYER_FALL_SPEED = 4;
 	
-	//Enemy
-	public final static int ENEMY_SIZE = 50;
-	public final static int ENEMY_START_X = 200;
-	public final static int ENEMY_SPEED = 3;
-	
-	//Coin
-	public final static int COIN_SIZE = 50;
-	public final static int COIN_SCORE = 1;
-	
 	//Block
 	public final static int BLOCK_WIDTH = 64;
 	public final static int BLOCK_HEIGHT = 64;
