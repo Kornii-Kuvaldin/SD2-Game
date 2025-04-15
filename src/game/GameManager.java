@@ -29,7 +29,7 @@ public class GameManager {
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
 	private ArrayList<Block> blocks; //List that holds all the blocks
-	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
+	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 85))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
 	//private ArrayList<Block> blocks1;
@@ -63,7 +63,7 @@ public class GameManager {
 		//int rows = (int) Math.ceil((double)screenWidth/blockWidth);
 		
 		int x = 0; //setting x to 0 to make sure 
-		int y = Constants.GROUND_HEIGHT + 43; //setting y to a bit bellow Ground height
+		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
 		
 		//debugging for columns and rows 
@@ -87,11 +87,11 @@ public class GameManager {
 		 */
 		
 		//saves the position of the blocks in a grid 
-				for(int row = 0; row < rows + 10; row++) {
-					for (int column = 0; column < columns + 26; column++) {
+				for(int row = 0; row < rows + 20; row++) {
+					for (int column = 0; column < columns + 35; column++) {
 						String fileName = "block1.png"; //name of the file 
 						x = column * 53; //increases the z factor 
-						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
+						y = (Constants.GROUND_HEIGHT + 85) + (row * 35); //increases the y factor 
 						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 						
 						//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
