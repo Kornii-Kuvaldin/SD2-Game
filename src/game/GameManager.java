@@ -14,7 +14,6 @@ import gameConstants.Constants;
 //import sprites.Block;
 import sprites.Block;
 import sprites.Coin;
-import sprites.Enemy;
 import sprites.Player;
 import sprites.Sprite;
 
@@ -25,7 +24,6 @@ public class GameManager {
 
 	private Player player;
 	private Player player2;
-	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
 	private ArrayList<Block> blocks; //List that holds all the blocks
@@ -221,9 +219,6 @@ public class GameManager {
 			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
 			{
 				//check what we collided with
-				if(other instanceof Enemy) {
-					resetGame();
-				}
 				//if(other instanceof Coin ) {
 					//player.increaseScore();
 					//((Coin)other).setCollected(true);
@@ -248,9 +243,6 @@ public class GameManager {
 		return player;
 	}
 
-	public Enemy getEnemy() {
-		return enemy;
-	}
 
 
 	public ArrayList<Coin> getCoins() {
