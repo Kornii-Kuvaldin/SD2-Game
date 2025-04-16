@@ -26,12 +26,10 @@ public class GameManager {
 	private Enemy enemy;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
-	private ArrayList<Blocks> blocks; //List that holds all the blocks
+	private ArrayList<Block> blocks; //List that holds all the blocks
 	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 43))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
-	
-	private ArrayList<Block> blocks;
 	public GameManager() {
 		this.blocks = new ArrayList<>();
 		restart();
@@ -90,7 +88,7 @@ public class GameManager {
 						String fileName = "block1.png"; //name of the file 
 						x = column * 53; //increases the z factor 
 						y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
-						blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 						
 						//debuggig for possitioning 
 						//System.out.println("Block created at position: (" + x + ", " + y + ")");
@@ -120,7 +118,7 @@ public class GameManager {
 		//Draw enemy
 		graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
-		for (Blocks block : blocks) {
+		for (Block block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
 		
