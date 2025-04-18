@@ -20,8 +20,6 @@ import sprites.Sprite;
 
 //Controls game logic
 public class GameManager {
-
-
 	private Player player;
 	private Player player2;
 	private ArrayList<Coin> coins;
@@ -30,6 +28,10 @@ public class GameManager {
 	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 85))/Constants.BLOCK_HEIGHT);
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
+	
+	//variables for countdown timer 
+	private int timeLeft; //this is in secs 
+	private long lastTimeUpdate; //for tracking 
 	//private ArrayList<Block> blocks1;
 	
 	public GameManager() {
@@ -111,6 +113,10 @@ public class GameManager {
 		//blocks1 = new ArrayList<Block>();
 		//blocks1.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
 		//blocks1.get(0).setHardness(50);
+		
+		//rest timer 
+		timeLeft = 120; //120 secs = 2 min
+		lastTimeUpdate = System.currentTimeMillis();
 	}
 
 
@@ -147,6 +153,11 @@ public class GameManager {
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
+		
+		//Draw countdown timer 
+		graphics.setColor(Color.RED);
+		graphics.setFont(Constants.SCORE_FONT);
+		graphics.drawString("Time Left" + timeLeft, 20, 50);
 	}
 
 	public void update()
@@ -163,6 +174,17 @@ public class GameManager {
 				//checkCollision(player,block);
 			//}
 		//}
+		
+		//the logic for the countdown 
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastTimeUpdate >= 1000) {
+			timeLeft--;
+			lastTimeUpdate = currentTime;
+			
+			if (timeLeft <= 0) {
+				restart();
+			}
+		}
 	}
 
 	public void keyPressed(int code) {
