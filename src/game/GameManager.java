@@ -163,6 +163,9 @@ public class GameManager {
 	{
 		player.update();
 		player2.update();
+		
+		checkStoreProximity(player);
+		checkStoreProximity(player2);
 		//enemy.update();
 		//collision checking
 		//checkCollision(player,enemy);
