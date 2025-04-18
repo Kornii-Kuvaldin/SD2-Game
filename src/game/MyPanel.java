@@ -51,6 +51,11 @@ public class MyPanel extends JPanel implements  KeyListener {
 		graphics.fillRect(0,Constants.GROUND_HEIGHT ,Constants.SCREEN_SIZE.width,Constants.SCREEN_SIZE.height);
 	}
 	
+	public void drawCountDownTimer(Graphics2D graphics) {
+		int remainingTime = game.getCountdownTimer();
+		
+	}
+	
 	public void update()
 	{
 		game.update();

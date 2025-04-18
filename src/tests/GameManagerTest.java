@@ -41,5 +41,33 @@ class GameManagerTest {
 		
 		assertTrue(coin.isCollected());
 	}
-
+	
+	//tests for the countdown timer 
+	//Initial countdown timer
+	@Test
+	void testInitCountdownTimer() {
+		GameManager game = new GameManager();
+		
+		assertEquals(120, game.getCountDownTimer(), "The initila countdwon time should be 120 secs");
+	}
+	
+	//tests if the countdown timer updates every second
+	@Test
+	void testCountdownUpdate() {
+		GameManager game = new GameManager();
+		
+		///get he initail time 
+		int initTime = game.getCountDownTimer();
+		
+		//Wait for a second 
+		try {
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		//the countdown should hae decreased by 1
+		assertEquals(initTime - 1, game.getCountDownTimer(), "The countdwon time should be decresed by 1 sec");
+	}
 }
