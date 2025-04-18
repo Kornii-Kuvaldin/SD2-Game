@@ -48,10 +48,30 @@ public class Player extends Sprite {
 		}
 	}
 	
-	public void increaseScore() {
+	//Adds blocks to inventory to be sold
+	public void collectBlock(Block block) 
+	{
+		inventory.add(block);	
+	}
+	
+	//"Selling" inventory by adding values to score and then clearing inventory
+	public void sellInventory()
+	{
+		for (Block block : inventory)
+		{
+			score += block.getValue();
+		}
+		
+		inventory.clear();
+	}
+	
+	public void increaseScore() 
+	{
 		score+=Constants.COIN_SCORE;
 	}
-	public int getScore(){
+	
+	public int getScore()
+	{
 		return score;
 	}
 }
