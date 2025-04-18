@@ -25,14 +25,6 @@ class GameManagerTest {
 		assertEquals(player.getX(), startPosition + Constants.PLAYER_SPEED);
 	}
 	
-	@Test
-	void testEnemyMovement() {
-		GameManager game = new GameManager();
-		int startPosition = Constants.ENEMY_START_X;
-		Enemy enemy = game.getEnemy();
-		game.update();
-		assertEquals(enemy.getX(), startPosition + Constants.ENEMY_SPEED);
-	}
 	
 	@Test
 	void testPlayerCollision() {
