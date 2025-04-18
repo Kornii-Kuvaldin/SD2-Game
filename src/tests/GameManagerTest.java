@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import game.GameManager;
 import gameConstants.Constants;
 import sprites.Coin;
-import sprites.Enemy;
 import sprites.Player;
 
 class GameManagerTest {
