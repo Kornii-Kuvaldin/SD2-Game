@@ -1,11 +1,16 @@
 package sprites;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gameConstants.Constants;
 
 public class Player extends Sprite {
 	
 	private int score;
 	private boolean jumping = false;
+	private Map<String, Block> inventory = new HashMap<>();
+	
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
 
