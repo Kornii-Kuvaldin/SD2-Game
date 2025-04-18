@@ -1,7 +1,7 @@
 package sprites;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import gameConstants.Constants;
 
@@ -9,7 +9,7 @@ public class Player extends Sprite {
 	
 	private int score;
 	private boolean jumping = false;
-	private Map<String, Block> inventory = new HashMap<>();
+	private List<Block> inventory = new ArrayList<>();
 	
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
