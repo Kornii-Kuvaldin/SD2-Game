@@ -22,11 +22,12 @@ public class Constants {
 	public final static int LEFTP1 = 37;
 	public final static int RIGHTP1 = 39;
 	public final static int UPP1 = 38;
+	public final static int STORE_SELL_P1 = 86;
 	
 	public final static int LEFTP2 = 65;
 	public final static int RIGHTP2 = 68;
 	public final static int UPP2 = 87;
-	
+	public final static int STORE_SELL_P2 = 77;
 	
 	//Player
 	public final static int PLAYER_WIDTH = 50;
