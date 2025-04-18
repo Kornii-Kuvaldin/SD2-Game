@@ -29,7 +29,7 @@ public class Player extends Sprite {
 	}
 	public void moveRight()
 	{
-		if(getX() + getWidth() + Constants.PLAYER_SPEED < Constants.SCREEN_SIZE.width/2) 
+		if(getX() + getWidth() + Constants.PLAYER_SPEED < Constants.SCREEN_SIZE.width) 
 			this.setX(getX() +Constants.PLAYER_SPEED);
 	}
 	
