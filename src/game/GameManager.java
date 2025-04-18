@@ -182,7 +182,7 @@ public class GameManager {
 			lastTimeUpdate = currentTime;
 			
 			if (timeLeft <= 0) {
-				restart();
+				restart(); //restarts the game onece teh countdown reaches 0
 			}
 		}
 	}
@@ -269,6 +269,10 @@ public class GameManager {
 
 	public ArrayList<Coin> getCoins() {
 		return coins;
+	}
+	
+	public int getCountDownTimer() {
+		return timeLeft;
 	}
 
 }
