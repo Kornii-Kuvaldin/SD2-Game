@@ -52,8 +52,10 @@ public class MyPanel extends JPanel implements  KeyListener {
 	}
 	
 	public void drawCountDownTimer(Graphics2D graphics) {
-		int remainingTime = game.getCountdownTimer();
-		
+		int remainingTime = game.getCountDownTimer();
+		graphics.setColor(Constants.BLACK);  // Assuming RED is defined in Constants
+	    graphics.setFont(Constants.SCORE_FONT);  // Use the defined font for consistency
+	    graphics.drawString("Time Left: " + remainingTime + "s", 20, 50);  // Display timer at the top
 	}
 	
 	public void update()
