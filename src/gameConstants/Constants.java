@@ -58,4 +58,5 @@ public class Constants {
 
 	//Fonts
 	public final static	Font SCORE_FONT = new Font( "SansSerif", Font.BOLD, 18 );
+	//public final static Font TIMER_FONT = new Font("SansSerif", Font.BOLD, 18);
 }
