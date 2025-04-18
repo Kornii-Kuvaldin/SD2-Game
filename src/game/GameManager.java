@@ -218,6 +218,26 @@ public class GameManager {
 			player2.jump();
 		}
 	}
+	
+	//Method checks if either player is close to the store and pressing their designated button 
+	public void checkStoreProximity(Player player)
+	{
+		int storeX = store.getX();
+		int storeY = store.getY();
+		int storeWidth = store.getWidth();
+		int storeHeight = store.getHeight();
+		
+		//If in the same position, check if pressing button
+		if (player.getX() >= storeX - storeWidth / 2 && player.getX() <= storeX + storeWidth / 2 && player.getY() >= storeY - storeHeight / 2 && player.getY() <= storeY + storeHeight / 2 )
+		{
+			//If pressing button, call method to sell inventory
+			if (activeKeys.contains(Constants.STORE_SELL_P1) || activeKeys.contains(Constants.STORE_SELL_P2))
+			{
+				player.sellInventory();
+			}
+		}
+	}
+	
 	public void checkCollision(Player player, Sprite other) {
 
 		//basic collision detection 
