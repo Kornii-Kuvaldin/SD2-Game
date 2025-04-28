@@ -235,6 +235,8 @@ public class GameManager {
 			}
 		}
 	}
+	
+	
 	private void resetGame() {
 		if(isGameResetting){
 			return;
