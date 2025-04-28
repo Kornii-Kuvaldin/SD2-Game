@@ -47,6 +47,7 @@ public class GameManager {
 		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
+		
 		//enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 
 		//player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
@@ -63,6 +64,7 @@ public class GameManager {
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
+		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT, 64, 64));
 		
 		//debugging for columns and rows 
 		//System.out.println("Clolumns: " + columns);
@@ -89,7 +91,7 @@ public class GameManager {
 					for (int column = 0; column < columns + 35; column++) {
 						String fileName = "block1.png"; //name of the file 
 						x = column * 53; //increases the z factor 
-						y = (Constants.GROUND_HEIGHT + 85) + (row * 35); //increases the y factor 
+						y = (Constants.GROUND_HEIGHT + 100) + (row * 35); //increases the y factor 
 						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 						
 						//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
@@ -159,9 +161,9 @@ public class GameManager {
 		//for(Coin coin: coins) {
 			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				//checkCollision(player,coin);
-			//for(Block block: blocks1){
-				//checkCollision(player,block);
-			//}
+			for(Block block: blocks){
+				checkCollision(player,block);
+			}
 		//}
 	}
 
@@ -223,13 +225,13 @@ public class GameManager {
 					//player.increaseScore();
 					//((Coin)other).setCollected(true);
 				//}
-				//if(other instanceof Block) {
-					//player.moveLeft();
-					//System.out.println(((Block) other).getBroken());
-					//if(((Block) other).getBroken()) {
-						//blocks1.remove(other);
-					//}
-				//}
+				if(other instanceof Block) {
+					player.moveLeft();
+					System.out.println(((Block) other).getProgress());
+					if(((Block) other).getBroken()) {
+						blocks.remove(other);
+					}
+				}
 			}
 		}
 	}
