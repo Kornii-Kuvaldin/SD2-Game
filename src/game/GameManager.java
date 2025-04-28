@@ -226,8 +226,12 @@ public class GameManager {
 					//((Coin)other).setCollected(true);
 				//}
 				if(other instanceof Block) {
-					player.moveLeft();
-					System.out.println(((Block) other).getProgress());
+					if(player.getY() < other.getY()+other.getHeight()){
+						System.out.println("Above");
+						player.setJumping(false);
+					}
+					//player.moveLeft();
+					//System.out.println(((Block) other).getProgress());
 					if(((Block) other).getBroken()) {
 						blocks.remove(other);
 					}
