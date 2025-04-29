@@ -95,9 +95,11 @@ public class GameManager {
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
 		
 		//Draw countdown timer 
+		int minutes = timeLeft/60;
+		int seconds = timeLeft%60;
 		graphics.setColor(Color.RED);
 		graphics.setFont(Constants.SCORE_FONT);
-		graphics.drawString("Time Left: " + timeLeft, 20, 50);
+		graphics.drawString(String.format("Time Left: %02d:%02d", minutes, seconds), 20, 50);
 	}
 	
 	public void drawSprites2(Graphics2D graphics, JPanel panel) {
@@ -117,9 +119,11 @@ public class GameManager {
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
 		
 		//Draw countdown timer 
+		int minutes = timeLeft/60;
+		int seconds = timeLeft%60;
 		graphics.setColor(Color.RED);
 		graphics.setFont(Constants.SCORE_FONT);
-		graphics.drawString("Time Left: " + timeLeft, 20, 50);
+		graphics.drawString(String.format("Time Left: %02d:%02d", minutes, seconds), 20, 50);
 	}
 
 	public void update()
