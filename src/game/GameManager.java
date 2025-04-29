@@ -64,7 +64,7 @@ public class GameManager {
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
-		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT, 64, 64));
+		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT+64, 64, 64));
 		
 		//debugging for columns and rows 
 		//System.out.println("Clolumns: " + columns);
@@ -161,8 +161,12 @@ public class GameManager {
 		//for(Coin coin: coins) {
 			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
 				//checkCollision(player,coin);
+		//We set both players to jumping to check for players that move from a block to an empty cell without jumping
+		player.setJumping(true);
+		player2.setJumping(true);
 			for(Block block: blocks){
 				checkCollision(player,block);
+				checkCollision(player2, block);
 			}
 		//}
 	}
@@ -210,7 +214,10 @@ public class GameManager {
 			player2.jump();
 		}
 	}
+	
+	boolean isGrounded=true;
 	public void checkCollision(Player player, Sprite other) {
+
 
 		//basic collision detection 
 		//check if one image intersects the other
@@ -225,9 +232,10 @@ public class GameManager {
 					//player.increaseScore();
 					//((Coin)other).setCollected(true);
 				//}
+				System.out.println("Player " + player.getY());
+				System.out.println("Other " + (other.getY()-other.getHeight()));
 				if(other instanceof Block) {
-					if(player.getY() < other.getY()+other.getHeight()){
-						System.out.println("Above");
+					if(player.getY() == other.getY()-other.getHeight()){
 						player.setJumping(false);
 					}
 					//player.moveLeft();
@@ -238,6 +246,14 @@ public class GameManager {
 				}
 			}
 		}
+
+
+//		if(!isGrounded)
+//			player.setJumping(true);
+//		else
+//			player.setJumping(false);
+//		System.out.println(isGrounded);
+//		isGrounded=false;
 	}
 	
 	
