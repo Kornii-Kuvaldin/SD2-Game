@@ -29,8 +29,8 @@ public class Constants {
 	//Player
 
 
-	public final static int PLAYER_WIDTH = 100;
-	public final static int PLAYER_HEIGHT = 100;
+	public final static int PLAYER_WIDTH = 64;
+	public final static int PLAYER_HEIGHT = 64;
 	public final static int PLAYER_START_X = 0;
 	public final static int PLAYER2_START_X = 200;
 	public final static int PLAYER_SPEED = 2;
