@@ -34,7 +34,6 @@ public class GameManager {
 	//variables for countdown timer 
 	private int timeLeft; //this is in secs 
 	private long lastTimeUpdate; //for tracking 
-	//private ArrayList<Block> blocks1;
 	
 	public GameManager() {
 		this.blocks = new ArrayList<>();
@@ -53,55 +52,18 @@ public class GameManager {
 		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		
-		//enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
-
-		//player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
-
-
-		//enemy = new Enemy("goomba.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
-		//trials
-		//int screenWidth = frame.getWidth();
-		//int screenHeight = frame.getHeight();
-		//int groundHeight = screenHeight/10;
-		//int columns = (int) Math.ceil((double)(screenHeight - (groundHeight + 43))/blockHeight);
-		//int rows = (int) Math.ceil((double)screenWidth/blockWidth);
-		
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
 		
-		//debugging for columns and rows 
-		//System.out.println("Clolumns: " + columns);
-		//System.out.println("Rows: " + rows);
-		
-		//trial
-		//blocks.clear();
-		/*
-		 * for(int row = 0; row < rows + 10; row++) {
-				if (x + blockWidth <= SCREEN_WIDTH && y + blockHeight <= SCREEN_HEIGHT) {
-					String fileName = "block1.png"; //name of the file 
-					x = column * 53; //increases the z factor 
-					y = (Constants.GROUND_HEIGHT + 43) + (row * 35); //increases the y factor 
-					if (x >= SCREEN_WIDTH) {
-						x = 0;
-						y = (GROUND_HEIGHT +43) + (row * blockHeight);
-				}
-				blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
-			}
-		 */
 		
 		//saves the position of the blocks in a grid 
-				for(int row = 0; row < rows + 20; row++) {
-					for (int column = 0; column < columns + 35; column++) {
-						String fileName = "block1.png"; //name of the file 
-						x = column * 53; //increases the z factor 
-						y = (Constants.GROUND_HEIGHT + 85) + (row * 35); //increases the y factor 
-						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
-						
-						//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
-						
-						//debuggig for possitioning 
-						//System.out.println("Block created at position: (" + x + ", " + y + ")");
+		for(int row = 0; row < rows + 20; row++) {
+			for (int column = 0; column < columns + 35; column++) {
+				String fileName = "block1.png"; //name of the file 
+				x = column * 53; //increases the z factor 
+				y = (Constants.GROUND_HEIGHT + 85) + (row * 35); //increases the y factor 
+				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 					}
 				}
 		new Thread(()->{
@@ -114,10 +76,6 @@ public class GameManager {
 			}
 		}).start();
 
-		//blocks1 = new ArrayList<Block>();
-		//blocks1.add(new Block("rock_amethyst.png", Constants.GROUND_HEIGHT-100, Constants.GROUND_HEIGHT, Constants.COIN_SIZE, Constants.COIN_SIZE));
-		//blocks1.get(0).setHardness(50);
-		
 		//rest timer 
 		timeLeft = 120; //120 secs = 2 min
 		lastTimeUpdate = System.currentTimeMillis();
@@ -178,16 +136,6 @@ public class GameManager {
 		
 		checkStoreProximity(player);
 		checkStoreProximity(player2);
-		//enemy.update();
-		//collision checking
-		//checkCollision(player,enemy);
-		//for(Coin coin: coins) {
-			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
-				//checkCollision(player,coin);
-			//for(Block block: blocks1){
-				//checkCollision(player,block);
-			//}
-		//}
 		
 		//Player 1 stays on the left of the screen 
 		int xMaxP1 = Constants.SCREEN_WIDTH/2 - Constants.PLAYER_WIDTH;
@@ -283,18 +231,6 @@ public class GameManager {
 		{ //check intersection on y axis
 			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
 			{
-				//check what we collided with
-				//if(other instanceof Coin ) {
-					//player.increaseScore();
-					//((Coin)other).setCollected(true);
-				//}
-				//if(other instanceof Block) {
-					//player.moveLeft();
-					//System.out.println(((Block) other).getBroken());
-					//if(((Block) other).getBroken()) {
-						//blocks1.remove(other);
-					//}
-				//}
 			}
 		}
 	}
@@ -311,8 +247,6 @@ public class GameManager {
 	public Store getStore() {
 		return store;
 	}
-
-
 
 	public ArrayList<Coin> getCoins() {
 		return coins;
