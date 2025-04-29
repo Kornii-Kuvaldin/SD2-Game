@@ -1,8 +1,12 @@
 package sprites;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import gameConstants.Constants;
 
@@ -18,7 +22,18 @@ public class Player extends Sprite {
 	
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
-
+		
+		try {
+			imageIdle = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_idle.png" : "player2_idle.png")));
+			imageLeft = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_left.png" : "player2_left.png")));
+			imageRight = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_right.png" : "player2_right.png")));
+			imageUp = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_up.png" : "player2_up.png")));
+			
+			setImage(imageIdle);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("file not found");
+		}
 	}
 	public void update()
 	{
