@@ -7,6 +7,10 @@ public class Player extends Sprite {
 	private int score;
 	private boolean jumping = true;
 	private boolean digging = false;
+	private boolean digRight= false;
+	private boolean digLeft= false;
+	private boolean isMovingRight;
+	private boolean isMovingLeft;
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
 
@@ -43,6 +47,18 @@ public class Player extends Sprite {
 	public boolean isDigging() {
 		return digging;
 	}
+	public void setRightDig(boolean b){
+		digRight = b;
+	}
+	public boolean isRightDig() {
+		return digRight;
+	}
+	public void setLeftDig(boolean b){
+		digLeft = b;
+	}
+	public boolean isLeftDig() {
+		return digLeft;
+	}
 	
 	public void setJumping(boolean b) {
 		jumping = b;
@@ -57,4 +73,17 @@ public class Player extends Sprite {
 	public int getScore(){
 		return score;
 	}
+	public boolean isMovingRight() {
+		return isMovingRight;
+	}
+	public void setMovingRight(boolean isMovingRight) {
+		this.isMovingRight = isMovingRight;
+	}
+	public boolean isMovingLeft() {
+		return isMovingLeft;
+	}
+	public void setMovingLeft(boolean isMovingLeft) {
+		this.isMovingLeft = isMovingLeft;
+	}
+	
 }

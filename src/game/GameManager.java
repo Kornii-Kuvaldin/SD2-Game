@@ -124,6 +124,8 @@ public class GameManager {
 		//Draw enemy
 		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
+
+		//We used syncrhonized to avoid ConcurrentModificationException. It limits the access to a thread by drawSprite and this loop so they do not attempt to happen at the same time
 		synchronized(blocks) {
 			for (Block block : blocks) {
 				graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
@@ -165,11 +167,13 @@ public class GameManager {
 			Iterator<Block> iterator = blocks.iterator();
 			while (iterator.hasNext()) {
 				Block block = iterator.next();
-				checkCollision(player, block);
+				//checkCollision(player, block);
+				checkCollision(player2, block);
 
 				// Safely remove broken blocks
 				if (block.getBroken()) {
 					iterator.remove();  // Safe removal using iterator
+					activeKeys.clear();
 				}
 			}
 		}
@@ -194,12 +198,20 @@ public class GameManager {
 		//Movement for player 1
 		if (activeKeys.contains(Constants.LEFTP1))
 		{
+			player.setMovingLeft(true);
 			player.moveLeft();
+
 		}
+		else
+			player.setMovingLeft(false);
 		if (activeKeys.contains(Constants.RIGHTP1))
 		{
+			player.setMovingRight(true);
 			player.moveRight();
+
 		}
+		else
+			player.setMovingRight(false);
 		if (activeKeys.contains(Constants.UPP1))
 		{
 			player.jump();
@@ -209,23 +221,31 @@ public class GameManager {
 		//Movement for player 2
 		if (activeKeys.contains(Constants.LEFTP2))
 		{
-			player2.moveLeft();;
+			player2.setMovingLeft(true);
+			player2.moveLeft();
+
 		}
+		else
+			player2.setMovingLeft(false);
 		if (activeKeys.contains(Constants.RIGHTP2))
 		{
+			player2.setMovingRight(true);
 			player2.moveRight();
+
 		}
+		else
+			player2.setMovingRight(false);
 		if (activeKeys.contains(Constants.UPP2))
 		{
 			player2.jump();
 		}
-		digP2=activeKeys.contains(Constants.DOWNP2);
+		player2.setDig(activeKeys.contains(Constants.DOWNP2));
 	}
 
 	boolean digP1 = false;
 	boolean digP2 = false;
 	public void checkCollision(Player player, Sprite other) {
-
+ddddd
 
 		//basic collision detection 
 		//check if one image intersects the other
@@ -241,21 +261,26 @@ public class GameManager {
 				//((Coin)other).setCollected(true);
 				//}
 				if(other instanceof Block) {
-					//					System.out.println("Player X: "+ player.getX());
-					//					System.out.println("Other X: "+ other.getX());
-					//					System.out.println("Player Y: "+ player.getY());
-					//					System.out.println("Other Y: "+ other.getY());
+					//Check if player is above the block we're colliding
 					if(player.getY() == other.getY()-other.getHeight()){
 						player.setJumping(false);
 						if(player.isDigging()) {
-							System.out.println("DIG");
 							((Block) other).blockMine();
 						}
 					}
-					if(player.getX()+player.getWidth() < other.getX()+2 && player.getY()==other.getY()) {
-						activeKeys.add(Constants.LEFTP1);
-						System.out.println("AAAA");
+										System.out.println("Player X: "+ player.getX());
+										System.out.println("Other X: "+ other.getX());
+										System.out.println("Player Y: "+ player.getY());
+										System.out.println("Other Y: "+ other.getY());
+					//Check if player is to the left of block
+					if((player.getX() + player.getWidth() >= other.getX() && player.getY()==other.getY() && player.isMovingRight())) {//If player is standing on the same level as a block and is moving  right towards it
+						player.moveLeft();
+						((Block) other).blockMine();
 					}
+//					if((player.getX() <= other.getX() && player.getY()==other.getY() && player.isMovingLeft())) {//If player is standing on the same level as a block and is moving  right towards it
+//						player.moveLeft();
+//						((Block) other).blockMine();
+//					}
 				}
 			}
 		}
