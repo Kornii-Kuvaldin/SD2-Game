@@ -124,40 +124,17 @@ public class GameManager {
 	}
 
 
-	public void drawSprites(Graphics2D graphics, JPanel panel) {
+	public void drawSprites1(Graphics2D graphics, JPanel panel) {
 
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
-		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 		
-		//Draw store 
-		graphics.drawImage(store.getImage(), store.getX(), store.getY(), store.getWidth(), store.getHeight(), panel);
-		
-		//Draw enemy
-		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
 		for (Block block : blocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
-		
-		//trial
-		//Iterator<Blocks> iterator = blocks.iterator();
-		//while (iterator.hasNext()) {
-			//Blocks block = iterator.next();
-			//graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
-		//}
-		
-		//debbuging for height and width of image 
-		//System.out.println("Height: " + block.getHeight());
-		//System.out.println("Width: " + block.getWidth());
-		
-		//for(Block block : blocks1)
-		//{
-			//graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
-		//}
 
 		//Draw GUI - score
-
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
@@ -165,7 +142,28 @@ public class GameManager {
 		//Draw countdown timer 
 		graphics.setColor(Color.RED);
 		graphics.setFont(Constants.SCORE_FONT);
-		graphics.drawString("Time Left" + timeLeft, 20, 50);
+		graphics.drawString("Time Left: " + timeLeft, 20, 50);
+	}
+	
+	public void drawSprites2(Graphics2D graphics, JPanel panel) {
+
+		//Draw player
+		graphics.drawImage(player2.getImage(), player2.getX() - (Constants.SCREEN_WIDTH/2), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
+
+		//Draw blocks
+		for (Block block : blocks) {
+			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		}
+
+		//Draw GUI - score
+		graphics.setColor(Color.white);
+		graphics.setFont(Constants.SCORE_FONT);
+		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
+		
+		//Draw countdown timer 
+		graphics.setColor(Color.RED);
+		graphics.setFont(Constants.SCORE_FONT);
+		graphics.drawString("Time Left: " + timeLeft, 20, 50);
 	}
 
 	public void update()
