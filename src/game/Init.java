@@ -15,7 +15,7 @@ public class Init {
 		frame.add(panel);
 		
 		//Set frame size to half screen size
-		frame.setSize(Constants.SCREEN_SIZE.width/2,Constants.SCREEN_SIZE.height/2);
+		frame.setSize(Constants.SCREEN_SIZE.width, Constants.SCREEN_SIZE.height);
 		frame.setVisible(true);
 		
 		//Frame takes focus for keyboard and mouse inputs
