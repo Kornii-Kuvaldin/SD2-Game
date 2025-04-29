@@ -1,4 +1,5 @@
 package game;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -35,8 +36,24 @@ public class MyPanel extends JPanel implements  KeyListener {
 		
 		drawBackGround(graphics);
 		
-		//draw game sprites
-		game.drawSprites(graphics,this);
+		int width = getWidth();
+		int height = getHeight();
+		
+		//Player 1 screen (left screen)
+		Graphics2D gLeft = (Graphics2D) graphics.create(0,0, width/2, height);
+		drawBackGround(gLeft);
+		game.drawSprites1(gLeft, this);
+		gLeft.dispose();
+		
+		//Player 2 screen (right screen)
+		Graphics2D gRight = (Graphics2D) graphics.create(width/2, 0, width/2, height);
+		drawBackGround(gRight);
+		game.drawSprites2(gRight, this);
+		gRight.dispose();
+		
+		//divider (black line)
+		graphics.setColor(Color.BLACK);
+		graphics.drawLine(width/2, 0, width/2, height);
 		
 		this.repaint();
 	}
