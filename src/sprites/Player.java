@@ -11,7 +11,11 @@ import javax.imageio.ImageIO;
 import gameConstants.Constants;
 
 public class Player extends Sprite {
-	
+	private boolean digging = false;
+	private boolean digRight= false;
+	private boolean digLeft= false;
+	private boolean isMovingRight;
+	private boolean isMovingLeft;
 	private int score;
 	private boolean jumping = false;
 	private List<Block> inventory = new ArrayList<>();
@@ -19,10 +23,10 @@ public class Player extends Sprite {
 	private BufferedImage imageLeft;
 	private BufferedImage imageRight;
 	private BufferedImage imageUp;
-	
+
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
-		
+
 		//Setting proper sprites for players
 		try {
 			//First, check if its player1 or player2, then set appropriate file (following same logic as in the sprite class constructor 
@@ -30,7 +34,7 @@ public class Player extends Sprite {
 			imageLeft = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_left.png" : "player2_left.png")));
 			imageRight = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_right.png" : "player2_right.png")));
 			imageUp = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_up.png" : "player2_up.png")));
-			
+
 			setImage(imageIdle);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -47,7 +51,7 @@ public class Player extends Sprite {
 				setY(Constants.GROUND_HEIGHT  - getHeight());
 			jumping = false;
 		}
-		
+
 	}
 	public void moveRight()
 	{
@@ -57,7 +61,7 @@ public class Player extends Sprite {
 			setImage(imageRight);
 		}
 	}
-	
+
 	public void moveLeft()
 	{
 		int xMin = 0;
@@ -66,7 +70,7 @@ public class Player extends Sprite {
 			setImage(imageLeft);
 		}
 	}
-	
+
 	public void jump()
 	{
 		if(jumping == false)
@@ -76,13 +80,13 @@ public class Player extends Sprite {
 			setImage(imageUp);
 		}
 	}
-	
+
 	//Adds blocks to inventory to be sold
 	public void collectBlock(Block block) 
 	{
 		inventory.add(block);	
 	}
-	
+
 	//"Selling" inventory by adding values to score and then clearing inventory
 	public void sellInventory()
 	{
@@ -90,31 +94,31 @@ public class Player extends Sprite {
 		{
 			score += block.getValue();
 		}
-		
+
 		inventory.clear();
 	}
-	
+
 	public void increaseScore() 
 	{
 		score+=Constants.COIN_SCORE;
 	}
-	
+
 	public int getScore()
 	{
 		return score;
 	}
-	
+
 	//sets movement boundaries 
 	public void setBounds(int left, int right) {
 		if(getX() < left) {
 			setX(left);
 		}
-			
+
 		if (getX() + getWidth() > right) {
 			setX(right - getWidth());
 		}
 	}
-	
+
 	//Getter and setter for imageIdle
 	public BufferedImage getImageIdle() 
 	{
@@ -123,4 +127,43 @@ public class Player extends Sprite {
 	public void setImageIdle(BufferedImage imageIdle) {
 		this.imageIdle = imageIdle;
 	}
+	public void setDig(boolean b){
+		digging = b;
+	}
+	public boolean isDigging() {
+		return digging;
+	}
+	public void setRightDig(boolean b){
+		digRight = b;
+	}
+	public boolean isRightDig() {
+		return digRight;
+	}
+	public void setLeftDig(boolean b){
+		digLeft = b;
+	}
+	public boolean isLeftDig() {
+		return digLeft;
+	}
+
+	public void setJumping(boolean b) {
+		jumping = b;
+	}
+	public boolean isJumping() {
+		return jumping;
+	}
+
+	public boolean isMovingRight() {
+		return isMovingRight;
+	}
+	public void setMovingRight(boolean isMovingRight) {
+		this.isMovingRight = isMovingRight;
+	}
+	public boolean isMovingLeft() {
+		return isMovingLeft;
+	}
+	public void setMovingLeft(boolean isMovingLeft) {
+		this.isMovingLeft = isMovingLeft;
+	}
+
 }
