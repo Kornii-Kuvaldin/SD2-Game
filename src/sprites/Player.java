@@ -1,5 +1,6 @@
 package sprites;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,10 @@ public class Player extends Sprite {
 	private int score;
 	private boolean jumping = false;
 	private List<Block> inventory = new ArrayList<>();
+	private BufferedImage imageIdle;
+	private BufferedImage imageLeft;
+	private BufferedImage imageRight;
+	private BufferedImage imageUp;
 	
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
