@@ -172,6 +172,7 @@ public class GameManager {
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
 		
+		//If no keys are being pressed, set player's image to idle 
 		if (!activeKeys.contains(Constants.LEFTP1) && !activeKeys.contains(Constants.RIGHTP1) && !activeKeys.contains(Constants.UPP1)) {
 			player.setImage(player.getImageIdle());
 		}

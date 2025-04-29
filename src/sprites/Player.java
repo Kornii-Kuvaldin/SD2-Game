@@ -23,7 +23,9 @@ public class Player extends Sprite {
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
 		
+		//Setting proper sprites for players
 		try {
+			//First, check if its player1 or player2, then set appropriate file (following same logic as in the sprite class constructor 
 			imageIdle = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_idle.png" : "player2_idle.png")));
 			imageLeft = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_left.png" : "player2_left.png")));
 			imageRight = ImageIO.read(new File ("images/" + (fileName.contains("player1") ? "player1_right.png" : "player2_right.png")));
