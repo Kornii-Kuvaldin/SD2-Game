@@ -27,8 +27,11 @@ public class GameManager {
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
 	private ArrayList<Block> blocks; //List that holds all the blocks
-	int columns = (int) Math.ceil((double)(Constants.SCREEN_HEIGHT - (Constants.GROUND_HEIGHT + 85))/Constants.BLOCK_HEIGHT);
-	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
+	int initY = Constants.GROUND_HEIGHT + 85;
+	int height = Constants.SCREEN_HEIGHT - initY;
+	int width = Constants.SCREEN_WIDTH;
+	int columns = height/Constants.BLOCK_HEIGHT;
+	int rows = width/Constants.BLOCK_WIDTH;
 	private boolean isGameResetting = false;
 	
 	//variables for countdown timer 
