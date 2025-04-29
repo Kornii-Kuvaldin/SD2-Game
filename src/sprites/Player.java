@@ -29,13 +29,15 @@ public class Player extends Sprite {
 	}
 	public void moveRight()
 	{
-		if(getX() + getWidth() + Constants.PLAYER_SPEED < Constants.SCREEN_SIZE.width) 
+		int xMax = Constants.SCREEN_SIZE.width - Constants.PLAYER_WIDTH;
+		if(getX() + getWidth() < xMax) 
 			this.setX(getX() +Constants.PLAYER_SPEED);
 	}
 	
 	public void moveLeft()
 	{
-		if(getX() -Constants.PLAYER_SPEED > 0) // don't go off screen
+		int xMin = 0;
+		if(getX() -Constants.PLAYER_SPEED > xMin) // don't go off screen
 			this.setX(getX() -Constants.PLAYER_SPEED);
 	}
 	
@@ -73,5 +75,16 @@ public class Player extends Sprite {
 	public int getScore()
 	{
 		return score;
+	}
+	
+	//sets movement boundaries 
+	public void setBounds(int left, int right) {
+		if(getX() < left) {
+			setX(left);
+		}
+			
+		if (getX() + getWidth() > right) {
+			setX(right - getWidth());
+		}
 	}
 }

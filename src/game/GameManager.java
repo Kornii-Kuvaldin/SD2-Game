@@ -168,8 +168,13 @@ public class GameManager {
 
 	public void update()
 	{
+		player.setBounds(0, Constants.SCREEN_SIZE.width/2);
 		player.update();
+		
+		player2.setBounds(Constants.SCREEN_SIZE.width/2, Constants.SCREEN_SIZE.width);
 		player2.update();
+		
+		updatePlayerMovement();
 		
 		checkStoreProximity(player);
 		checkStoreProximity(player2);
