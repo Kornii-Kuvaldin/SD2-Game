@@ -1,11 +1,16 @@
 package sprites;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import gameConstants.Constants;
 
 public class Player extends Sprite {
 	
 	private int score;
 	private boolean jumping = false;
+	private List<Block> inventory = new ArrayList<>();
+	
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
 
@@ -24,7 +29,7 @@ public class Player extends Sprite {
 	}
 	public void moveRight()
 	{
-		if(getX() + getWidth() + Constants.PLAYER_SPEED < Constants.SCREEN_SIZE.width/2) 
+		if(getX() + getWidth() + Constants.PLAYER_SPEED < Constants.SCREEN_SIZE.width) 
 			this.setX(getX() +Constants.PLAYER_SPEED);
 	}
 	
@@ -43,10 +48,30 @@ public class Player extends Sprite {
 		}
 	}
 	
-	public void increaseScore() {
+	//Adds blocks to inventory to be sold
+	public void collectBlock(Block block) 
+	{
+		inventory.add(block);	
+	}
+	
+	//"Selling" inventory by adding values to score and then clearing inventory
+	public void sellInventory()
+	{
+		for (Block block : inventory)
+		{
+			score += block.getValue();
+		}
+		
+		inventory.clear();
+	}
+	
+	public void increaseScore() 
+	{
 		score+=Constants.COIN_SCORE;
 	}
-	public int getScore(){
+	
+	public int getScore()
+	{
 		return score;
 	}
 }

@@ -16,12 +16,14 @@ import sprites.Block;
 import sprites.Coin;
 import sprites.Player;
 import sprites.Sprite;
+import sprites.Store;
 
 
 //Controls game logic
 public class GameManager {
 	private Player player;
 	private Player player2;
+	private Store store;
 	private ArrayList<Coin> coins;
 	private Set<Integer> activeKeys = new HashSet<Integer>();
 	private ArrayList<Block> blocks; //List that holds all the blocks
@@ -45,6 +47,8 @@ public class GameManager {
 		}
 		
 		isGameResetting = true;
+		
+		store = new Store("bank.png", Constants.SCREEN_WIDTH/2, Constants.GROUND_HEIGHT, Constants.STORE_WIDTH, Constants.STORE_HEIGHT);
 		
 		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
@@ -125,6 +129,10 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		graphics.drawImage(player2.getImage(), player2.getX(), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
+		
+		//Draw store 
+		graphics.drawImage(store.getImage(), store.getX(), store.getY(), store.getWidth(), store.getHeight(), panel);
+		
 		//Draw enemy
 		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
@@ -164,6 +172,9 @@ public class GameManager {
 	{
 		player.update();
 		player2.update();
+		
+		checkStoreProximity(player);
+		checkStoreProximity(player2);
 		//enemy.update();
 		//collision checking
 		//checkCollision(player,enemy);
@@ -230,6 +241,26 @@ public class GameManager {
 			player2.jump();
 		}
 	}
+	
+	//Method checks if either player is close to the store and pressing their designated button 
+	public void checkStoreProximity(Player player)
+	{
+		int storeX = store.getX();
+		int storeY = store.getY();
+		int storeWidth = store.getWidth();
+		int storeHeight = store.getHeight();
+		
+		//If in the same position, check if pressing button
+		if (player.getX() >= storeX - storeWidth / 2 && player.getX() <= storeX + storeWidth / 2 && player.getY() >= storeY - storeHeight / 2 && player.getY() <= storeY + storeHeight / 2 )
+		{
+			//If pressing button, call method to sell inventory
+			if (activeKeys.contains(Constants.STORE_SELL_P1) || activeKeys.contains(Constants.STORE_SELL_P2))
+			{
+				player.sellInventory();
+			}
+		}
+	}
+	
 	public void checkCollision(Player player, Sprite other) {
 
 		//basic collision detection 
@@ -263,6 +294,10 @@ public class GameManager {
 	//getters
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public Store getStore() {
+		return store;
 	}
 
 

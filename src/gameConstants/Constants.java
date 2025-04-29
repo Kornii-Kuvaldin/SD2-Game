@@ -22,20 +22,25 @@ public class Constants {
 	public final static int LEFTP1 = 37;
 	public final static int RIGHTP1 = 39;
 	public final static int UPP1 = 38;
+	public final static int STORE_SELL_P1 = 86;
 	
 	public final static int LEFTP2 = 65;
 	public final static int RIGHTP2 = 68;
 	public final static int UPP2 = 87;
+	public final static int STORE_SELL_P2 = 77;
+	
 	//Player
-
-
 	public final static int PLAYER_WIDTH = 100;
-	public final static int PLAYER_HEIGHT = 100;
+	public final static int PLAYER_HEIGHT = 100;	
 	public final static int PLAYER_START_X = 0;
 	public final static int PLAYER2_START_X = 200;
 	public final static int PLAYER_SPEED = 2;
 	public final static int PLAYER_JUMP_HEIGHT = 70;
 	public final static int PLAYER_FALL_SPEED = 4;
+	
+	//Store
+	public final static int STORE_WIDTH = 70;
+	public final static int STORE_HEIGHT = 70;
 	
 	//Enemy
 	public final static int ENEMY_SIZE = 100;
