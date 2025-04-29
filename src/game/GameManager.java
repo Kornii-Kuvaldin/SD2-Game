@@ -58,11 +58,11 @@ public class GameManager {
 		
 		
 		//saves the position of the blocks in a grid 
-		for(int row = 0; row < rows + 20; row++) {
-			for (int column = 0; column < columns + 35; column++) {
+		for(int row = 0; row < rows + 17; row++) {
+			for (int column = 0; column < columns + 10; column++) {
 				String fileName = "block1.png"; //name of the file 
-				x = column * 53; //increases the z factor 
-				y = (Constants.GROUND_HEIGHT + 85) + (row * 35); //increases the y factor 
+				x = column * 58; //increases the z factor 
+				y = Constants.GROUND_HEIGHT + 85 + (row * 35); //increases the y factor 
 				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 					}
 				}
