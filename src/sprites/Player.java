@@ -50,15 +50,19 @@ public class Player extends Sprite {
 	public void moveRight()
 	{
 		int xMax = Constants.SCREEN_SIZE.width - Constants.PLAYER_WIDTH;
-		if(getX() + getWidth() < xMax) 
+		if(getX() + getWidth() < xMax) {
 			this.setX(getX() +Constants.PLAYER_SPEED);
+			setImage(imageRight);
+		}
 	}
 	
 	public void moveLeft()
 	{
 		int xMin = 0;
-		if(getX() -Constants.PLAYER_SPEED > xMin) // don't go off screen
+		if(getX() -Constants.PLAYER_SPEED > xMin) { // don't go off screen 
 			this.setX(getX() -Constants.PLAYER_SPEED);
+			setImage(imageLeft);
+		}
 	}
 	
 	public void jump()
@@ -67,6 +71,7 @@ public class Player extends Sprite {
 		{
 			setY(getY() -Constants.PLAYER_JUMP_HEIGHT);
 			jumping = true;
+			setImage(imageUp);
 		}
 	}
 	
