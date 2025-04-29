@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import gameConstants.Constants;
 //import sprites.Block;
 import sprites.Block;
+import sprites.Blocks;
 import sprites.Coin;
 import sprites.Player;
 import sprites.Sprite;
@@ -69,19 +70,12 @@ public class GameManager {
 				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 					}
 				}
-		new Thread(()->{
-		try {
-			Thread.sleep(500);
-			restart();
-			}
-		catch (InterruptedException e){
-			e.printStackTrace();
-			}
-		}).start();
 
 		//rest timer 
 		timeLeft = 120; //120 secs = 2 min
 		lastTimeUpdate = System.currentTimeMillis();
+		
+		isGameResetting = false;
 	}
 
 
@@ -91,7 +85,8 @@ public class GameManager {
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		
 		//Draw blocks
-		for (Block block : blocks) {
+		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
+		for (Block block : tempBlocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
 
@@ -112,7 +107,8 @@ public class GameManager {
 		graphics.drawImage(player2.getImage(), player2.getX() - (Constants.SCREEN_WIDTH/2), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 
 		//Draw blocks
-		for (Block block : blocks) {
+		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
+		for (Block block : tempBlocks) {
 			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		}
 
@@ -149,15 +145,16 @@ public class GameManager {
 		int xMinP2 = Constants.SCREEN_WIDTH/2;
 		player2.setX(Math.max(xMinP2, Math.min(player2.getX(), xMaxP2)));
 		
+		if (timeLeft <= 0) {
+			restart(); //restarts the game onece teh countdown reaches 0
+			return; //stops theh updating
+		}
+		
 		//the logic for the countdown 
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastTimeUpdate >= 1000) {
 			timeLeft--;
 			lastTimeUpdate = currentTime;
-			
-			if (timeLeft <= 0) {
-				restart(); //restarts the game onece teh countdown reaches 0
-			}
 		}
 	}
 
@@ -169,7 +166,6 @@ public class GameManager {
 	
 	
 	public void keyReleased(int code) {
-		int playerY = Constants.GROUND_HEIGHT;
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
 	}
