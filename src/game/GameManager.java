@@ -223,7 +223,7 @@ public class GameManager {
 		//check if one image intersects the other
 
 		//check intersection on x axis
-		if(player.getX() + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
+		(player.getX) + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
 		{ //check intersection on y axis
 			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
 			{
@@ -232,8 +232,6 @@ public class GameManager {
 					//player.increaseScore();
 					//((Coin)other).setCollected(true);
 				//}
-				System.out.println("Player " + player.getY());
-				System.out.println("Other " + (other.getY()-other.getHeight()));
 				if(other instanceof Block) {
 					if(player.getY() == other.getY()-other.getHeight()){
 						player.setJumping(false);
