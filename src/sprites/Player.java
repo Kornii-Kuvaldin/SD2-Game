@@ -112,4 +112,13 @@ public class Player extends Sprite {
 			setX(right - getWidth());
 		}
 	}
+	
+	//Getter and setter for imageIdle
+	public BufferedImage getImageIdle() 
+	{
+		return imageIdle;
+	}
+	public void setImageIdle(BufferedImage imageIdle) {
+		this.imageIdle = imageIdle;
+	}
 }
