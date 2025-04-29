@@ -171,6 +171,13 @@ public class GameManager {
 	public void keyReleased(int code) {
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
+		
+		if (!activeKeys.contains(Constants.LEFTP1) && !activeKeys.contains(Constants.RIGHTP1) && !activeKeys.contains(Constants.UPP1)) {
+			player.setImage(player.getImageIdle());
+		}
+		if (!activeKeys.contains(Constants.LEFTP2) && !activeKeys.contains(Constants.RIGHTP2) && !activeKeys.contains(Constants.UPP2)) {
+			player2.setImage(player2.getImageIdle());
+		}
 	}
 	
 	//Method takes care of players movement
