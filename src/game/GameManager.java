@@ -31,7 +31,7 @@ public class GameManager {
 	int rows = (int) Math.ceil((double)Constants.SCREEN_WIDTH/Constants.BLOCK_WIDTH); 
 	private boolean isGameResetting = false;
 	//private ArrayList<Block> blocks1;
-	
+
 	public GameManager() {
 		this.blocks = new ArrayList<>();
 		restart();
@@ -41,13 +41,13 @@ public class GameManager {
 		if(isGameResetting) {
 			return;
 		}
-		
+
 		isGameResetting = true;
-		
+
 		player = new Player("player1.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
-		
-		
+
+
 		//enemy = new Enemy("player2.png", Constants.ENEMY_START_X , Constants.GROUND_HEIGHT  , Constants.ENEMY_SIZE, Constants.ENEMY_SIZE);
 
 		//player = new Player("mario.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
@@ -60,16 +60,16 @@ public class GameManager {
 		//int groundHeight = screenHeight/10;
 		//int columns = (int) Math.ceil((double)(screenHeight - (groundHeight + 43))/blockHeight);
 		//int rows = (int) Math.ceil((double)screenWidth/blockWidth);
-		
+
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
-		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT+64, 64, 64));
-		
+		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT+100-64, 64, 64));
+
 		//debugging for columns and rows 
 		//System.out.println("Clolumns: " + columns);
 		//System.out.println("Rows: " + rows);
-		
+
 		//trial
 		//blocks.clear();
 		/*
@@ -85,28 +85,28 @@ public class GameManager {
 				blocks.add(new Blocks(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 			}
 		 */
-		
+
 		//saves the position of the blocks in a grid 
-				for(int row = 0; row < rows + 20; row++) {
-					for (int column = 0; column < columns + 35; column++) {
-						String fileName = "block1.png"; //name of the file 
-						x = column * 53; //increases the z factor 
-						y = (Constants.GROUND_HEIGHT + 100) + (row * 35); //increases the y factor 
-						blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
-						
-						//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
-						
-						//debuggig for possitioning 
-						//System.out.println("Block created at position: (" + x + ", " + y + ")");
-					}
-				}
-		new Thread(()->{
-		try {
-			Thread.sleep(500);
-			restart();
+		for(int row = 0; row < rows + 20; row++) {
+			for (int column = 0; column < columns + 35; column++) {
+				String fileName = "block1.png"; //name of the file 
+				x = column * Constants.BLOCK_WIDTH; //increases the z factor 
+				y = (Constants.GROUND_HEIGHT + 100) + (row * Constants.BLOCK_HEIGHT); //increases the y factor 
+				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+
+				//Too many blocks were causing a "java.lang.OutOfMemoryError: Java heap space" error, downscalling the image for blocks fixed it
+
+				//debuggig for possitioning 
+				//System.out.println("Block created at position: (" + x + ", " + y + ")");
 			}
-		catch (InterruptedException e){
-			e.printStackTrace();
+		}
+		new Thread(()->{
+			try {
+				Thread.sleep(500);
+				restart();
+			}
+			catch (InterruptedException e){
+				e.printStackTrace();
 			}
 		}).start();
 
@@ -124,24 +124,26 @@ public class GameManager {
 		//Draw enemy
 		//graphics.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(),enemy.getWidth(),enemy.getHeight(),panel);
 		//Draw blocks
-		for (Block block : blocks) {
-			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		synchronized(blocks) {
+			for (Block block : blocks) {
+				graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+			}
 		}
-		
+
 		//trial
 		//Iterator<Blocks> iterator = blocks.iterator();
 		//while (iterator.hasNext()) {
-			//Blocks block = iterator.next();
-			//graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		//Blocks block = iterator.next();
+		//graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
 		//}
-		
+
 		//debbuging for height and width of image 
 		//System.out.println("Height: " + block.getHeight());
 		//System.out.println("Width: " + block.getWidth());
-		
+
 		//for(Block block : blocks1)
 		//{
-			//graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
+		//graphics.drawImage(block.getImage(), block.getX(), block.getY(),block.getWidth(),block.getHeight(),panel);
 		//}
 
 		//Draw GUI - score
@@ -151,24 +153,26 @@ public class GameManager {
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
 	}
 
-	public void update()
-	{
+	public void update() {
 		player.update();
 		player2.update();
-		//enemy.update();
-		//collision checking
-		//checkCollision(player,enemy);
-		//for(Coin coin: coins) {
-			//if(coin.isCollected() == false) //only check for coins that haven't been picked up yet
-				//checkCollision(player,coin);
-		//We set both players to jumping to check for players that move from a block to an empty cell without jumping
+		//Set jumping as true to check for any changes under the players, otherwise players fly when leaving a block
 		player.setJumping(true);
 		player2.setJumping(true);
-			for(Block block: blocks){
-				checkCollision(player,block);
-				checkCollision(player2, block);
+
+		//Use an Iterator to allow removing blocks while iterating
+		synchronized(blocks) {
+			Iterator<Block> iterator = blocks.iterator();
+			while (iterator.hasNext()) {
+				Block block = iterator.next();
+				checkCollision(player, block);
+
+				// Safely remove broken blocks
+				if (block.getBroken()) {
+					iterator.remove();  // Safe removal using iterator
+				}
 			}
-		//}
+		}
 	}
 
 	public void keyPressed(int code) {
@@ -176,17 +180,17 @@ public class GameManager {
 		updatePlayerMovement();
 
 	}
-	
-	
+
+
 	public void keyReleased(int code) {
 		int playerY = Constants.GROUND_HEIGHT;
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
 	}
-	
+
 	//Method takes care of players movement
 	public void updatePlayerMovement () {
-		
+
 		//Movement for player 1
 		if (activeKeys.contains(Constants.LEFTP1))
 		{
@@ -200,6 +204,8 @@ public class GameManager {
 		{
 			player.jump();
 		}
+		player.setDig(activeKeys.contains(Constants.DOWNP1));
+
 		//Movement for player 2
 		if (activeKeys.contains(Constants.LEFTP2))
 		{
@@ -213,9 +219,11 @@ public class GameManager {
 		{
 			player2.jump();
 		}
+		digP2=activeKeys.contains(Constants.DOWNP2);
 	}
-	
-	boolean isGrounded=true;
+
+	boolean digP1 = false;
+	boolean digP2 = false;
 	public void checkCollision(Player player, Sprite other) {
 
 
@@ -223,38 +231,45 @@ public class GameManager {
 		//check if one image intersects the other
 
 		//check intersection on x axis
-		(player.getX) + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
+		if(player.getX() + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
 		{ //check intersection on y axis
 			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
 			{
 				//check what we collided with
 				//if(other instanceof Coin ) {
-					//player.increaseScore();
-					//((Coin)other).setCollected(true);
+				//player.increaseScore();
+				//((Coin)other).setCollected(true);
 				//}
 				if(other instanceof Block) {
+					//					System.out.println("Player X: "+ player.getX());
+					//					System.out.println("Other X: "+ other.getX());
+					//					System.out.println("Player Y: "+ player.getY());
+					//					System.out.println("Other Y: "+ other.getY());
 					if(player.getY() == other.getY()-other.getHeight()){
 						player.setJumping(false);
+						if(player.isDigging()) {
+							System.out.println("DIG");
+							((Block) other).blockMine();
+						}
 					}
-					//player.moveLeft();
-					//System.out.println(((Block) other).getProgress());
-					if(((Block) other).getBroken()) {
-						blocks.remove(other);
+					if(player.getX()+player.getWidth() < other.getX()+2 && player.getY()==other.getY()) {
+						activeKeys.add(Constants.LEFTP1);
+						System.out.println("AAAA");
 					}
 				}
 			}
 		}
 
 
-//		if(!isGrounded)
-//			player.setJumping(true);
-//		else
-//			player.setJumping(false);
-//		System.out.println(isGrounded);
-//		isGrounded=false;
+		//		if(!isGrounded)
+		//			player.setJumping(true);
+		//		else
+		//			player.setJumping(false);
+		//		System.out.println(isGrounded);
+		//		isGrounded=false;
 	}
-	
-	
+
+
 	private void resetGame() {
 		if(isGameResetting){
 			return;

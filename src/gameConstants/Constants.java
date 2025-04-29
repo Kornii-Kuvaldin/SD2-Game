@@ -22,10 +22,12 @@ public class Constants {
 	public final static int LEFTP1 = 37;
 	public final static int RIGHTP1 = 39;
 	public final static int UPP1 = 38;
+	public final static int DOWNP1 = 40;
 	
 	public final static int LEFTP2 = 65;
 	public final static int RIGHTP2 = 68;
 	public final static int UPP2 = 87;
+	public final static int DOWNP2 = 83;
 	//Player
 
 
@@ -51,6 +53,7 @@ public class Constants {
 	public final static int BLOCK_HEIGHT = 64;
 	
 	//speed
+	public final static double DIG_SPEED = 20;
 
 	//colors
 	public final static Color SKY_BLUE = new Color(174, 227, 245);//rgb

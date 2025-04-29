@@ -5,21 +5,16 @@ import gameConstants.Constants;
 public class Player extends Sprite {
 	
 	private int score;
-	private boolean jumping = false;
+	private boolean jumping = true;
+	private boolean digging = false;
 	public Player( String fileName,int x , int y, int width, int height ) {
 		super(fileName, x,y,width,height);
 
 	}
 	public void update()
 	{
-		if(getY() < Constants.GROUND_HEIGHT - getHeight())
+		if(jumping==true)
 			setY( getY() +Constants.PLAYER_FALL_SPEED);
-		else
-		{
-			if(jumping == true)
-				setY(Constants.GROUND_HEIGHT  - getHeight());
-			jumping = false;
-		}
 		
 	}
 	public void moveRight()
@@ -41,6 +36,19 @@ public class Player extends Sprite {
 			setY(getY() -Constants.PLAYER_JUMP_HEIGHT);
 			jumping = true;
 		}
+	}
+	public void setDig(boolean b){
+		digging = b;
+	}
+	public boolean isDigging() {
+		return digging;
+	}
+	
+	public void setJumping(boolean b) {
+		jumping = b;
+	}
+	public boolean isJumping() {
+		return jumping;
 	}
 	
 	public void increaseScore() {

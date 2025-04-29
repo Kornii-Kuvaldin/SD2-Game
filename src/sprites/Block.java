@@ -4,7 +4,7 @@ import sprites.Sprite;
 
 public class Block extends Sprite {
 
-	private double hardness;
+	private double hardness = 100;
 	private double value;
 	private double progress=0;
 	private boolean isBroken=false;
@@ -19,6 +19,9 @@ public class Block extends Sprite {
 	}
 	public boolean getBroken() {
 		return isBroken;
+	}
+	public double getProgress() {
+		return progress;
 	}
 	public void setHardness(double x) {
 		hardness=x;
