@@ -184,6 +184,15 @@ public class GameManager {
 			//}
 		//}
 		
+		//Player 1 stays on the left of the screen 
+		int xMaxP1 = Constants.SCREEN_WIDTH/2 - Constants.PLAYER_WIDTH;
+		player.setX(Math.max(0, Math.min(player.getX(), xMaxP1)));
+				
+		//Player 2 stays on the right of the screen 
+		int xMaxP2 = Constants.WORLD_WIDTH - Constants.PLAYER_WIDTH;
+		int xMinP2 = Constants.SCREEN_WIDTH/2;
+		player2.setX(Math.max(xMinP2, Math.min(player2.getX(), xMaxP2)));
+		
 		//the logic for the countdown 
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastTimeUpdate >= 1000) {
