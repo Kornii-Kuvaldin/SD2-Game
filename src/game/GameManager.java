@@ -33,11 +33,11 @@ public class GameManager {
 	int columns = height/Constants.BLOCK_HEIGHT;
 	int rows = width/Constants.BLOCK_WIDTH;
 	private boolean isGameResetting = false;
-	
+
 	//variables for countdown timer 
 	private int timeLeft; //this is in secs 
 	private long lastTimeUpdate; //for tracking 
-	
+
 	public GameManager() {
 		this.blocks = new ArrayList<>();
 		restart();
@@ -47,19 +47,19 @@ public class GameManager {
 		if(isGameResetting) {
 			return;
 		}
-		
+
 		isGameResetting = true;
-		
+
 		store = new Store("bank.png", 1000, Constants.GROUND_HEIGHT, Constants.STORE_WIDTH, Constants.STORE_HEIGHT);
-		
+
 		player = new Player("player1_idle.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2_idle.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
-		
+
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
-		
-		
+
+
 		//saves the position of the blocks in a grid 
 		for(int row = 0; row < rows + 17; row++) {
 			for (int column = 0; column < columns + 10; column++) {
@@ -67,13 +67,13 @@ public class GameManager {
 				x = column * 58; //increases the z factor 
 				y = Constants.GROUND_HEIGHT + 85 + (row * 35); //increases the y factor 
 				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
-					}
-				}
+			}
+		}
 
 		//rest timer 
 		timeLeft = 120; //120 secs = 2 min
 		lastTimeUpdate = System.currentTimeMillis();
-		
+
 		isGameResetting = false;
 	}
 
@@ -82,22 +82,24 @@ public class GameManager {
 
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
-		
+
 		int cameraX1 = player.getX() - Constants.SCREEN_WIDTH / 4;
 		int storeScreenX = store.getX() - cameraX1;
 		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
-		
+
 		//Draw blocks
 		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
-		for (Block block : tempBlocks) {
-			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		synchronized(blocks) {
+			for (Block block : tempBlocks) {
+				graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+			}
 		}
 
 		//Draw GUI - score
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
-		
+
 		//Draw countdown timer 
 		int minutes = timeLeft/60;
 		int seconds = timeLeft%60;
@@ -105,7 +107,7 @@ public class GameManager {
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(String.format("Time Left: %02d:%02d", minutes, seconds), 20, 50);
 	}
-	
+
 	public void drawSprites2(Graphics2D graphics, JPanel panel) {
 
 		//Draw player
@@ -114,18 +116,20 @@ public class GameManager {
 		int cameraX2 = player2.getX() - Constants.SCREEN_WIDTH / 4;
 		int storeScreenX = store.getX() - cameraX2;
 		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
-		
+
 		//Draw blocks
 		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
-		for (Block block : tempBlocks) {
-			graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+		synchronized(blocks) {
+			for (Block block : tempBlocks) {
+				graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+			}
 		}
 
 		//Draw GUI - score
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
 		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
-		
+
 		//Draw countdown timer 
 		int minutes = timeLeft/60;
 		int seconds = timeLeft%60;
@@ -138,29 +142,29 @@ public class GameManager {
 	{
 		player.setBounds(0, Constants.SCREEN_SIZE.width/2);
 		player.update();
-		
+
 		player2.setBounds(Constants.SCREEN_SIZE.width/2, Constants.SCREEN_SIZE.width);
 		player2.update();
-		
+
 		updatePlayerMovement();
-		
+
 		checkStoreProximity(player);
 		checkStoreProximity(player2);
-		
+
 		//Player 1 stays on the left of the screen 
 		int xMaxP1 = Constants.SCREEN_WIDTH/2 - Constants.PLAYER_WIDTH;
 		player.setX(Math.max(0, Math.min(player.getX(), xMaxP1)));
-				
+
 		//Player 2 stays on the right of the screen 
 		int xMaxP2 = Constants.WORLD_WIDTH - Constants.PLAYER_WIDTH;
 		int xMinP2 = Constants.SCREEN_WIDTH/2;
 		player2.setX(Math.max(xMinP2, Math.min(player2.getX(), xMaxP2)));
-		
+
 		if (timeLeft <= 0) {
 			restart(); //restarts the game onece teh countdown reaches 0
 			return; //stops theh updating
 		}
-		
+
 		//the logic for the countdown 
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastTimeUpdate >= 1000) {
@@ -174,12 +178,12 @@ public class GameManager {
 		updatePlayerMovement();
 
 	}
-	
-	
+
+
 	public void keyReleased(int code) {
 		activeKeys.remove(code); //Removing key pressed from HashSet once released 
 		updatePlayerMovement();
-		
+
 		//If no keys are being pressed, set player's image to idle 
 		if (!activeKeys.contains(Constants.LEFTP1) && !activeKeys.contains(Constants.RIGHTP1) && !activeKeys.contains(Constants.UPP1)) {
 			player.setImage(player.getImageIdle());
@@ -188,10 +192,10 @@ public class GameManager {
 			player2.setImage(player2.getImageIdle());
 		}
 	}
-	
+
 	//Method takes care of players movement
 	public void updatePlayerMovement () {
-		
+
 		//Movement for player 1
 		if (activeKeys.contains(Constants.LEFTP1))
 		{
@@ -219,7 +223,7 @@ public class GameManager {
 			player2.jump();
 		}
 	}
-	
+
 	//Method checks if either player is close to the store and pressing their designated button 
 	public void checkStoreProximity(Player player)
 	{
@@ -227,7 +231,7 @@ public class GameManager {
 		int storeY = store.getY();
 		int storeWidth = store.getWidth();
 		int storeHeight = store.getHeight();
-		
+
 		//If in the same position, check if pressing button
 		if (player.getX() >= storeX - storeWidth / 2 && player.getX() <= storeX + storeWidth / 2 && player.getY() >= storeY - storeHeight / 2 && player.getY() <= storeY + storeHeight / 2 )
 		{
@@ -238,7 +242,7 @@ public class GameManager {
 			}
 		}
 	}
-	
+
 	public void checkCollision(Player player, Sprite other) {
 
 		//basic collision detection 
@@ -261,7 +265,7 @@ public class GameManager {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public Store getStore() {
 		return store;
 	}
@@ -269,7 +273,7 @@ public class GameManager {
 	public ArrayList<Coin> getCoins() {
 		return coins;
 	}
-	
+
 	public int getCountDownTimer() {
 		return timeLeft;
 	}
