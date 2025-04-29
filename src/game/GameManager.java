@@ -64,7 +64,6 @@ public class GameManager {
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
 		blocks = new ArrayList<>(); //initialize ArrayList
-		blocks.add(new Block("block1.png", 300, Constants.GROUND_HEIGHT+100-64, 64, 64));
 
 		//debugging for columns and rows 
 		//System.out.println("Clolumns: " + columns);
@@ -245,13 +244,14 @@ public class GameManager {
 	boolean digP1 = false;
 	boolean digP2 = false;
 	public void checkCollision(Player player, Sprite other) {
-ddddd
 
 		//basic collision detection 
 		//check if one image intersects the other
 
 		//check intersection on x axis
-		if(player.getX() + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
+		int leftOffset=26;
+		int rightOffset=40;
+		if(player.getX() + player.getWidth() >= other.getX()+leftOffset && player.getX() + player.getWidth()  <= other.getX()+rightOffset + other.getWidth())
 		{ //check intersection on y axis
 			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
 			{
@@ -268,31 +268,36 @@ ddddd
 							((Block) other).blockMine();
 						}
 					}
-										System.out.println("Player X: "+ player.getX());
-										System.out.println("Other X: "+ other.getX());
-										System.out.println("Player Y: "+ player.getY());
-										System.out.println("Other Y: "+ other.getY());
+					System.out.println("Player X: "+ player.getX());
+					System.out.println("Other X: "+ other.getX());
+					System.out.println("Player Y: "+ player.getY());
+					System.out.println("Other Y: "+ other.getY());
 					//Check if player is to the left of block
 					if((player.getX() + player.getWidth() >= other.getX() && player.getY()==other.getY() && player.isMovingRight())) {//If player is standing on the same level as a block and is moving  right towards it
 						player.moveLeft();
+						player.moveLeft();
+						player.moveLeft();
 						((Block) other).blockMine();
 					}
-//					if((player.getX() <= other.getX() && player.getY()==other.getY() && player.isMovingLeft())) {//If player is standing on the same level as a block and is moving  right towards it
-//						player.moveLeft();
-//						((Block) other).blockMine();
-//					}
+					if((player.getX()-rightOffset <= other.getX() && player.getY()==other.getY() && player.isMovingLeft())) {//If player is standing on the same level as a block and is moving  right towards it
+						player.moveRight();						
+						player.moveRight();						
+						player.moveRight();
+						((Block) other).blockMine();
+					}
 				}
 			}
 		}
-
-
-		//		if(!isGrounded)
-		//			player.setJumping(true);
-		//		else
-		//			player.setJumping(false);
-		//		System.out.println(isGrounded);
-		//		isGrounded=false;
 	}
+
+
+	//		if(!isGrounded)
+	//			player.setJumping(true);
+	//		else
+	//			player.setJumping(false);
+	//		System.out.println(isGrounded);
+	//		isGrounded=false;
+
 
 
 	private void resetGame() {

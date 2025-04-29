@@ -85,5 +85,6 @@ public class Player extends Sprite {
 	public void setMovingLeft(boolean isMovingLeft) {
 		this.isMovingLeft = isMovingLeft;
 	}
+
 	
 }
