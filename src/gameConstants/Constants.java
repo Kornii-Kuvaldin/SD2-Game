@@ -24,9 +24,9 @@ public class Constants {
 	public final static int UPP1 = 38;
 	public final static int STORE_SELL_P1 = 86;
 	
-	public final static int LEFTP2 = 65;
-	public final static int RIGHTP2 = 68;
-	public final static int UPP2 = 87;
+	public final static int LEFTP2 = 65; //A
+	public final static int RIGHTP2 = 68; //D
+	public final static int UPP2 = 87; //W
 	public final static int STORE_SELL_P2 = 77;
 	
 	//Player
@@ -63,5 +63,7 @@ public class Constants {
 
 	//Fonts
 	public final static	Font SCORE_FONT = new Font( "SansSerif", Font.BOLD, 18 );
-	//public final static Font TIMER_FONT = new Font("SansSerif", Font.BOLD, 18);
+	
+	//screen 
+		public final static int WORLD_WIDTH = (int)((SCREEN_WIDTH/BLOCK_WIDTH + 35) * BLOCK_WIDTH);
 }
