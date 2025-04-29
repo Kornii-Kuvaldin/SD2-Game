@@ -50,7 +50,7 @@ public class GameManager {
 		
 		isGameResetting = true;
 		
-		store = new Store("bank.png", Constants.SCREEN_WIDTH/2, Constants.GROUND_HEIGHT, Constants.STORE_WIDTH, Constants.STORE_HEIGHT);
+		store = new Store("bank.png", 1000, Constants.GROUND_HEIGHT, Constants.STORE_WIDTH, Constants.STORE_HEIGHT);
 		
 		player = new Player("player1_idle.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 		player2 = new Player("player2_idle.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
@@ -83,6 +83,10 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 		
+		int cameraX1 = player.getX() - Constants.SCREEN_WIDTH / 4;
+		int storeScreenX = store.getX() - cameraX1;
+		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
+		
 		//Draw blocks
 		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
 		for (Block block : tempBlocks) {
@@ -107,6 +111,10 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player2.getImage(), player2.getX() - (Constants.SCREEN_WIDTH/2), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 
+		int cameraX2 = player2.getX() - Constants.SCREEN_WIDTH / 4;
+		int storeScreenX = store.getX() - cameraX2;
+		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
+		
 		//Draw blocks
 		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
 		for (Block block : tempBlocks) {
