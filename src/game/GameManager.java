@@ -44,6 +44,35 @@ public class GameManager {
 	}
 
 	public void restart() {
+		ArrayList <Block> blockTypes= new ArrayList<Block>();
+		blockTypes.add(new Block("block1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.ROCK_VALUE));
+		blockTypes.add(new Block("block2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.ROCK_VALUE));
+		blockTypes.add(new Block("amethyst1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.AMETHYST_VALUE));
+		blockTypes.add(new Block("amethyst2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.AMETHYST_VALUE));
+		blockTypes.add(new Block("ruby1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.RUBY_VALUE));
+		blockTypes.add(new Block("ruby2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.RUBY_VALUE));
+		blockTypes.add(new Block("emerald1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.EMERALD_VALUE));
+		blockTypes.add(new Block("emerald2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.EMERALD_VALUE));
+		blockTypes.add(new Block("saphire1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.SAPHIRE_VALUE));
+		blockTypes.add(new Block("saphire2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.SAPHIRE_VALUE));
+		blockTypes.add(new Block("diamond1.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.DIAMOND_VALUE));
+		blockTypes.add(new Block("diamond2.png", 0, 0, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, Constants.DIAMOND_VALUE));
+		//I added an array of names because for some reason i could not get an image by trying to access the List with getFileName, it gave a file not found exception
+		String[] names = new String[]{
+				"block1.png",
+				"block2.png",
+				"amethyst1.png",
+				"amethyst2.png",
+				"ruby1.png",
+				"ruby2.png",
+				"emerald1.png",
+				"emerald2.png",
+				"saphire1.png",
+				"saphire2.png",
+				"diamond1.png",
+				"diamond2.png"
+		};
+
 		if(isGameResetting) {
 			return;
 		}
@@ -63,10 +92,11 @@ public class GameManager {
 		//saves the position of the blocks in a grid 
 		for(int row = 0; row < rows + 17; row++) {
 			for (int column = 0; column < columns + 19; column++) {
-				String fileName = "block1.png"; //name of the file 
+				int randIndex = (int) (Math.random()*names.length);
+				String fileName = names[randIndex]; //name of the file 
 				x = column * Constants.BLOCK_WIDTH; //increases the z factor 
 				y = (Constants.GROUND_HEIGHT + 100) + (row * Constants.BLOCK_HEIGHT); //increases the y factor 
-				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
+				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, blockTypes.get(randIndex).getValue())); //adds the position to the ArrayList
 			}
 		}
 
@@ -297,10 +327,10 @@ public class GameManager {
 				//player.increaseScore();
 				//((Coin)other).setCollected(true);
 				//}
-//				System.out.println("Player x:" +player.getX());
-//				System.out.println("Other x: " + other.getX());
-//				System.out.println("Player y:" +player.getY());
-//				System.out.println("Other y: " + other.getY());
+				//				System.out.println("Player x:" +player.getX());
+				//				System.out.println("Other x: " + other.getX());
+				//				System.out.println("Player y:" +player.getY());
+				//				System.out.println("Other y: " + other.getY());
 				if(other instanceof Block) {
 					//Check if player is above the block we're colliding
 
@@ -325,9 +355,11 @@ public class GameManager {
 							//Player moves from right
 							player.setX(other.getX() + other.getWidth()-Constants.PLAYER_KNOCKBACK);
 							((Block) other).blockMine();
-
 						}
 					}
+					if(((Block) other).getBroken())
+						player.increaseScore(((Block) other).getValue());
+					System.out.println(player.getScore());
 				}
 			}
 		}

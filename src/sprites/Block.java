@@ -1,4 +1,4 @@
-package sprites;
+package sprites;	
 
 public class Block extends Sprite {
 
@@ -8,10 +8,18 @@ public class Block extends Sprite {
 	private double progress=0;
 
 	//Constructor
-	public Block(String fileName, int x, int y, int width, int height) {
+	public Block(String fileName, int x, int y, int width, int height, double value) {
 		super(fileName, x, y, width, height);
+		this.value=value;
 	}
-
+	
+	public Block(Block b) {
+	    super(b.getFileName(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
+	    this.value = b.getValue();
+	    this.hardness = b.getHardness();
+	    this.progress = 0;
+	    this.isBroken = false;
+	}
 	public void blockMine() {
 		progress += 10;
 		if (progress>=hardness)

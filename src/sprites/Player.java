@@ -91,9 +91,9 @@ public class Player extends Sprite {
 		inventory.clear();
 	}
 
-	public void increaseScore() 
+	public void increaseScore(double score) 
 	{
-		score+=Constants.COIN_SCORE;
+		this.score+=score;
 	}
 
 	public int getScore()
