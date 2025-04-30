@@ -22,11 +22,13 @@ public class Constants {
 	public final static int LEFTP1 = 37;
 	public final static int RIGHTP1 = 39;
 	public final static int UPP1 = 38;
+	public final static int DOWNP1 = 40;
 	public final static int STORE_SELL_P1 = 86;
 	
 	public final static int LEFTP2 = 65; //A
 	public final static int RIGHTP2 = 68; //D
 	public final static int UPP2 = 87; //W
+	public final static int DOWNP2 = 83;//S
 	public final static int STORE_SELL_P2 = 77;
 	
 	//Player
@@ -35,8 +37,9 @@ public class Constants {
 	public final static int PLAYER_START_X = 0;
 	public final static int PLAYER2_START_X = 200;
 	public final static int PLAYER_SPEED = 2;
-	public final static int PLAYER_JUMP_HEIGHT = 70;
+	public final static int PLAYER_JUMP_HEIGHT = 125;
 	public final static int PLAYER_FALL_SPEED = 4;
+	public final static int PLAYER_KNOCKBACK = 32;
 	
 	//Store
 	public final static int STORE_WIDTH = 70;
@@ -52,7 +55,7 @@ public class Constants {
 	public final static int COIN_SCORE = 1;
 	
 	//Block
-	public final static int BLOCK_WIDTH = 150;
+	public final static int BLOCK_WIDTH = 100;
 	public final static int BLOCK_HEIGHT = 100;
 	
 	//speed

@@ -2,7 +2,7 @@ package sprites;
 
 public class Block extends Sprite {
 
-	private double hardness;
+	private double hardness=100;
 	private double value;
 	private boolean isBroken=false;
 	private double progress=0;

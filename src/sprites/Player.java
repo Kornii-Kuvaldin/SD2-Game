@@ -17,7 +17,7 @@ public class Player extends Sprite {
 	private boolean isMovingRight;
 	private boolean isMovingLeft;
 	private int score;
-	private boolean jumping = false;
+	private boolean jumping = true;
 	private List<Block> inventory = new ArrayList<>();
 	private BufferedImage imageIdle;
 	private BufferedImage imageLeft;
@@ -43,15 +43,9 @@ public class Player extends Sprite {
 	}
 	public void update()
 	{
-		if(getY() < Constants.GROUND_HEIGHT - getHeight())
+		if(jumping==true)
 			setY( getY() +Constants.PLAYER_FALL_SPEED);
-		else
-		{
-			if(jumping == true)
-				setY(Constants.GROUND_HEIGHT  - getHeight());
-			jumping = false;
-		}
-
+		
 	}
 	public void moveRight()
 	{
@@ -77,7 +71,6 @@ public class Player extends Sprite {
 		{
 			setY(getY() -Constants.PLAYER_JUMP_HEIGHT);
 			jumping = true;
-			setImage(imageUp);
 		}
 	}
 

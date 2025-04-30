@@ -52,8 +52,8 @@ public class GameManager {
 
 		store = new Store("bank.png", 1000, Constants.GROUND_HEIGHT, Constants.STORE_WIDTH, Constants.STORE_HEIGHT);
 
-		player = new Player("player1_idle.png", 0, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
-		player2 = new Player("player2_idle.png", 200, Constants.GROUND_HEIGHT  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		player = new Player("player1_idle.png", 0, Constants.GROUND_HEIGHT-50  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
+		player2 = new Player("player2_idle.png", 200, Constants.GROUND_HEIGHT-50  ,Constants.PLAYER_WIDTH , Constants.PLAYER_HEIGHT);
 
 		int x = 0; //setting x to 0 to make sure 
 		int y = Constants.GROUND_HEIGHT + 85; //setting y to a bit bellow Ground height
@@ -62,10 +62,10 @@ public class GameManager {
 
 		//saves the position of the blocks in a grid 
 		for(int row = 0; row < rows + 17; row++) {
-			for (int column = 0; column < columns + 10; column++) {
+			for (int column = 0; column < columns + 2; column++) {
 				String fileName = "block1.png"; //name of the file 
-				x = column * 58; //increases the z factor 
-				y = Constants.GROUND_HEIGHT + 85 + (row * 35); //increases the y factor 
+				x = column * Constants.BLOCK_WIDTH; //increases the z factor 
+				y = (Constants.GROUND_HEIGHT + 100) + (row * Constants.BLOCK_HEIGHT); //increases the y factor 
 				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT)); //adds the position to the ArrayList
 			}
 		}
@@ -145,7 +145,25 @@ public class GameManager {
 
 		player2.setBounds(Constants.SCREEN_SIZE.width/2, Constants.SCREEN_SIZE.width);
 		player2.update();
+		//Set jumping as true to check for any changes under the players, otherwise players fly when leaving a block
+		player.setJumping(true);
+		player2.setJumping(true);
 
+		//Use an Iterator to allow removing blocks while iterating
+		synchronized(blocks) {
+			Iterator<Block> iterator = blocks.iterator();
+			while (iterator.hasNext()) {
+				Block block = iterator.next();
+				checkCollision(player, block);
+				//checkCollision(player2, block);
+
+				// Safely remove broken blocks
+				if (block.getBroken()) {
+					iterator.remove();  // Safe removal using iterator
+					activeKeys.clear();
+				}
+			}
+		}
 		updatePlayerMovement();
 
 		checkStoreProximity(player);
@@ -199,29 +217,48 @@ public class GameManager {
 		//Movement for player 1
 		if (activeKeys.contains(Constants.LEFTP1))
 		{
+			player.setMovingLeft(true);
 			player.moveLeft();
+
 		}
+		else
+			player.setMovingLeft(false);
 		if (activeKeys.contains(Constants.RIGHTP1))
 		{
+			player.setMovingRight(true);
 			player.moveRight();
+
 		}
+		else
+			player.setMovingRight(false);
 		if (activeKeys.contains(Constants.UPP1))
 		{
 			player.jump();
 		}
+		player.setDig(activeKeys.contains(Constants.DOWNP1));
+
 		//Movement for player 2
 		if (activeKeys.contains(Constants.LEFTP2))
 		{
-			player2.moveLeft();;
+			player2.setMovingLeft(true);
+			player2.moveLeft();
+
 		}
+		else
+			player2.setMovingLeft(false);
 		if (activeKeys.contains(Constants.RIGHTP2))
 		{
+			player2.setMovingRight(true);
 			player2.moveRight();
+
 		}
+		else
+			player2.setMovingRight(false);
 		if (activeKeys.contains(Constants.UPP2))
 		{
 			player2.jump();
 		}
+		player2.setDig(activeKeys.contains(Constants.DOWNP2));
 	}
 
 	//Method checks if either player is close to the store and pressing their designated button 
@@ -249,10 +286,45 @@ public class GameManager {
 		//check if one image intersects the other
 
 		//check intersection on x axis
-		if(player.getX() + player.getWidth() >= other.getX() && player.getX() + player.getWidth()  <= other.getX() + other.getWidth())
+		int verticalLeniency = 5;
+		int leftOffset=40;
+		int rightOffset=64;
+		if(player.getX() + player.getWidth() >= other.getX()+leftOffset && player.getX() + player.getWidth()  <= other.getX()+rightOffset + other.getWidth())
 		{ //check intersection on y axis
-			if(	player.getY()+ player.getHeight()  >= other.getY() && player.getY() + player.getHeight()  <= other.getY() + other.getHeight())
-			{
+			if(	player.getY()+ player.getHeight()  >= other.getY()-verticalLeniency && player.getY() + player.getHeight()  <= other.getY()+verticalLeniency + other.getHeight())
+			{	//check what we collided with
+				//if(other instanceof Coin ) {
+				//player.increaseScore();
+				//((Coin)other).setCollected(true);
+				//}
+				if(other instanceof Block) {
+					//Check if player is above the block we're colliding
+
+					int playerBottom = player.getY() + player.getHeight();
+					int blockTop = other.getY();
+
+					if (Math.abs(playerBottom - blockTop) <= verticalLeniency && player.getX() + player.getWidth() >= other.getX() && player.getX() <= other.getX() + other.getWidth()) {
+						player.setJumping(false);
+
+						if (player.isDigging()) {
+							((Block) other).blockMine();
+						}
+					}
+					//					Check if player is to the left of block
+					if (player.getY() + player.getHeight() > other.getY() && player.getY() < other.getY() + other.getHeight()) {
+						//Vertical Overlap
+						if (player.isMovingRight() && player.getX() + player.getWidth() > other.getX() && player.getX() < other.getX()) {
+							//Player moves from left
+							player.setX(other.getX()-other.getWidth()+ Constants.PLAYER_KNOCKBACK );
+							((Block) other).blockMine();
+						} else if (player.isMovingLeft() && player.getX() < other.getX() + other.getWidth() && player.getX() + player.getWidth() > other.getX()) {
+							//Player moves from right
+							player.setX(other.getX() + other.getWidth()-Constants.PLAYER_KNOCKBACK);
+							((Block) other).blockMine();
+
+						}
+					}
+				}
 			}
 		}
 	}
