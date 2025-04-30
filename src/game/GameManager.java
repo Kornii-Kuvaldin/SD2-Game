@@ -90,13 +90,15 @@ public class GameManager {
 
 
 		//saves the position of the blocks in a grid 
-		for(int row = 0; row < rows + 17; row++) {
+		for(int row = 0; row < 9; row++) {
 			for (int column = 0; column < columns + 19; column++) {
 				int randIndex = (int) (Math.random()*names.length);
 				String fileName = names[randIndex]; //name of the file 
 				x = column * Constants.BLOCK_WIDTH; //increases the z factor 
 				y = (Constants.GROUND_HEIGHT + 100) + (row * Constants.BLOCK_HEIGHT); //increases the y factor 
 				blocks.add(new Block(fileName, x, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, blockTypes.get(randIndex).getValue())); //adds the position to the ArrayList
+				//blocks.add(new Block(fileName, x+Constants.SCREEN_WIDTH/2, y, Constants.BLOCK_WIDTH, Constants.BLOCK_HEIGHT, blockTypes.get(randIndex).getValue())); //adds the position to the ArrayList
+				
 			}
 		}
 
@@ -155,14 +157,14 @@ public class GameManager {
 		ArrayList<Block> tempBlocks = new ArrayList<>(blocks); // Make a copy of the blocks list
 		synchronized(blocks) {
 			for (Block block : tempBlocks) {
-				graphics.drawImage(block.getImage(), block.getX(), block.getY(), block.getWidth(), block.getHeight(), panel);
+				graphics.drawImage(block.getImage(), block.getX()-Constants.SCREEN_WIDTH/2, block.getY(), block.getWidth(), block.getHeight(), panel);
 			}
 		}
 
 		//Draw GUI - score
 		graphics.setColor(Color.white);
 		graphics.setFont(Constants.SCORE_FONT);
-		graphics.drawString(Integer.toString(player.getScore()), 20, 20);
+		graphics.drawString(Integer.toString(player2.getScore()), 20, 20);
 
 		//Draw countdown timer 
 		int minutes = timeLeft/60;
@@ -194,7 +196,7 @@ public class GameManager {
 				// Safely remove broken blocks
 				if (block.getBroken()) {
 					iterator.remove();  // Safe removal using iterator
-					activeKeys.clear();
+					//activeKeys.clear();
 				}
 			}
 		}
@@ -363,7 +365,6 @@ public class GameManager {
 					}
 					if(((Block) other).getBroken())
 						player.increaseScore(((Block) other).getValue());
-					System.out.println(player.getScore());
 				}
 			}
 		}
