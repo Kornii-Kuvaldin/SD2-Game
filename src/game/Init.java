@@ -1,7 +1,6 @@
 package game;
 
 import javax.swing.JFrame;
-
 import gameConstants.Constants;
 
 //Creates Frame and runs main game loop

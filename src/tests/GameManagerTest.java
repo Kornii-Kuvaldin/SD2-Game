@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -69,7 +69,7 @@ class GameManagerTest {
 	    int currentTime = game.getCountDownTimer();
 
 	    // Check if the countdown has decreased
-	    assertEquals("Countdown should decrease by 1 second", initTime - 1, currentTime);
+	    assertEquals(initTime - 1, currentTime, "Countdown should decrease by 1 second");
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ class GameManagerTest {
 		Store store = game.getStore();
 		
 		//Testing if the stores parameters are consistent 
-		assertEquals("bank.png",store.getFileName());
+		assertEquals("bank.png", (String) store.getFileName());
 		assertEquals(1000, store.getX());
 		assertEquals(Constants.GROUND_HEIGHT, store.getY());
 		assertEquals(Constants.STORE_WIDTH, store.getWidth());
