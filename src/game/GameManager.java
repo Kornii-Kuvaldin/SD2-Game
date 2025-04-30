@@ -62,7 +62,7 @@ public class GameManager {
 
 		//saves the position of the blocks in a grid 
 		for(int row = 0; row < rows + 17; row++) {
-			for (int column = 0; column < columns + 2; column++) {
+			for (int column = 0; column < columns + 19; column++) {
 				String fileName = "block1.png"; //name of the file 
 				x = column * Constants.BLOCK_WIDTH; //increases the z factor 
 				y = (Constants.GROUND_HEIGHT + 100) + (row * Constants.BLOCK_HEIGHT); //increases the y factor 
@@ -155,7 +155,7 @@ public class GameManager {
 			while (iterator.hasNext()) {
 				Block block = iterator.next();
 				checkCollision(player, block);
-				//checkCollision(player2, block);
+				checkCollision(player2, block);
 
 				// Safely remove broken blocks
 				if (block.getBroken()) {
@@ -286,7 +286,7 @@ public class GameManager {
 		//check if one image intersects the other
 
 		//check intersection on x axis
-		int verticalLeniency = 5;
+		int verticalLeniency = 10;
 		int leftOffset=40;
 		int rightOffset=64;
 		if(player.getX() + player.getWidth() >= other.getX()+leftOffset && player.getX() + player.getWidth()  <= other.getX()+rightOffset + other.getWidth())
@@ -297,6 +297,10 @@ public class GameManager {
 				//player.increaseScore();
 				//((Coin)other).setCollected(true);
 				//}
+//				System.out.println("Player x:" +player.getX());
+//				System.out.println("Other x: " + other.getX());
+//				System.out.println("Player y:" +player.getY());
+//				System.out.println("Other y: " + other.getY());
 				if(other instanceof Block) {
 					//Check if player is above the block we're colliding
 
