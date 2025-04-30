@@ -71,6 +71,7 @@ public class Player extends Sprite {
 		{
 			setY(getY() -Constants.PLAYER_JUMP_HEIGHT);
 			jumping = true;
+			setImage(imageUp);
 		}
 	}
 

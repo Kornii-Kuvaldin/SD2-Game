@@ -11,6 +11,7 @@ import game.GameManager;
 import gameConstants.Constants;
 import sprites.Coin;
 import sprites.Player;
+import sprites.Store;
 
 class GameManagerTest {
 	
@@ -69,5 +70,18 @@ class GameManagerTest {
 
 	    // Check if the countdown has decreased
 	    assertEquals("Countdown should decrease by 1 second", initTime - 1, currentTime);
+	}
+	
+	@Test
+	void testStore() {
+		GameManager game = new GameManager();
+		Store store = game.getStore();
+		
+		//Testing if the stores parameters are consistent 
+		assertEquals("bank.png",store.getFileName());
+		assertEquals(1000, store.getX());
+		assertEquals(Constants.GROUND_HEIGHT, store.getY());
+		assertEquals(Constants.STORE_WIDTH, store.getWidth());
+		assertEquals(Constants.STORE_HEIGHT, store.getHeight());
 	}
 }
