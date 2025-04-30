@@ -57,6 +57,13 @@ public class Constants {
 	//Block
 	public final static int BLOCK_WIDTH = 100;
 	public final static int BLOCK_HEIGHT = 100;
+	//Value of different blocks
+	public final static int DIAMOND_VALUE = 1000;
+	public final static int RUBY_VALUE = 800;
+	public final static int EMERALD_VALUE = 600;
+	public final static int SAPHIRE_VALUE = 400;
+	public final static int AMETHYST_VALUE = 200;
+	public final static int ROCK_VALUE = 50;
 	
 	//speed
 
