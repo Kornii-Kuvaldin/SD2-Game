@@ -113,7 +113,9 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player.getImage(), player.getX(), player.getY(),player.getWidth(),player.getHeight(),panel);
 
+		//Calculating the X value for the first screen 
 		int cameraX1 = player.getX() - Constants.SCREEN_WIDTH / 4;
+		//The middle X value of said screen
 		int storeScreenX = store.getX() - cameraX1;
 		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
 
@@ -143,7 +145,9 @@ public class GameManager {
 		//Draw player
 		graphics.drawImage(player2.getImage(), player2.getX() - (Constants.SCREEN_WIDTH/2), player2.getY(),player2.getWidth(),player2.getHeight(),panel);
 
+		//Calculating the X value for the second screen 
 		int cameraX2 = player2.getX() - Constants.SCREEN_WIDTH / 4;
+		//The middle X value of said screen
 		int storeScreenX = store.getX() - cameraX2;
 		graphics.drawImage(store.getImage(), storeScreenX, store.getY(), store.getWidth(), store.getHeight(), panel);
 
