@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,21 +54,20 @@ class GameManagerTest {
 	
 	//tests if the countdown timer updates every second
 	@Test
-	void testCountdownUpdate() {
+	void testCountdownUpdate() throws InterruptedException {
 		GameManager game = new GameManager();
-		
-		///get he initail time 
-		int initTime = game.getCountDownTimer();
-		
-		//Wait for a second 
-		try {
-			Thread.sleep(1000);
-		}
-		catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		//the countdown should hae decreased by 1
-		assertEquals(initTime - 1, game.getCountDownTimer(), "The countdwon time should be decresed by 1 sec");
+	    int initTime = game.getCountDownTimer();
+
+	    // Wait for 1 second (simulate time passing)
+	    Thread.sleep(1000);
+
+	    // Update the game state (which should trigger the countdown update)
+	    game.update();  // Call the update method to decrement the countdown timer
+
+	    // Get the updated countdown time
+	    int currentTime = game.getCountDownTimer();
+
+	    // Check if the countdown has decreased
+	    assertEquals("Countdown should decrease by 1 second", initTime - 1, currentTime);
 	}
 }
